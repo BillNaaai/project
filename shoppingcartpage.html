@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - E-Shop</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+<div id="navigation-container"></div>
+
+<script src="navigation.js"></script>
+
+    <!-- Notifications container -->
+    <div id="notifications"></div>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <h1 class="mb-4">Shopping Cart</h1>
+        
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header bg-white">
+                        <div class="row">
+                            <div class="col-md-6">Product</div>
+                            <div class="col-md-2">Price</div>
+                            <div class="col-md-2">Quantity</div>
+                            <div class="col-md-2">Total</div>
+                        </div>
+                    </div>
+                    <div class="card-body" id="cart-items">
+                        <!-- Cart items will be inserted here by JavaScript -->
+                        <div class="alert alert-info">Your cart is empty</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Order Summary</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Subtotal</span>
+                            <span id="cart-total">$0.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Shipping</span>
+                            <span>Free</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-3">
+                            <strong>Total</strong>
+                            <strong id="cart-final-total">$0.00</strong>
+                        </div>
+                        <button class="btn btn-primary w-100" id="checkout-btn">Proceed to Checkout</button>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h5>Need Help?</h5>
+                        <p>Have questions or need assistance with your order?</p>
+                        <a href="contactpage.html" class="btn btn-outline-secondary w-100">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <script src="footer.js"></script>
+
+    <!-- Link to client-side JavaScript -->
+    <script src="client.js"></script>
+</body>
+</html>

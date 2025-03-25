@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center - E-Shop</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <div id="navigation-container"></div>
+    <script src="navigation.js"></script>
+
+    <!-- Hero Section -->
+    <div class="bg-primary text-white py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1>Help Center</h1>
+                    <p class="lead">Find answers to your questions and get the support you need.</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for help...">
+                        <button class="btn btn-light" type="button">
+                            <i class="bi-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Categories -->
+    <div class="container my-5">
+        <h2 class="text-center mb-4">How can we help you today?</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card help-card">
+                    <div class="card-body text-center">
+                        <i class="bi-cart fs-1 text-primary mb-3"></i>
+                        <h4>Orders & Shipping</h4>
+                        <p>Track your order, shipping information, and returns.</p>
+                        <a href="#orders" class="btn btn-outline-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card help-card">
+                    <div class="card-body text-center">
+                        <i class="bi-person fs-1 text-primary mb-3"></i>
+                        <h4>Account Help</h4>
+                        <p>Manage your account, password resets, and profile settings.</p>
+                        <a href="#account" class="btn btn-outline-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card help-card">
+                    <div class="card-body text-center">
+                        <i class="bi-credit-card fs-1 text-primary mb-3"></i>
+                        <h4>Payment Issues</h4>
+                        <p>Billing questions, payment methods, and refunds.</p>
+                        <a href="#payment" class="btn btn-outline-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Orders & Shipping -->
+    <div class="help-section bg-light" id="orders">
+        <div class="container">
+            <h2 class="mb-4">Orders & Shipping</h2>
+            <div class="accordion" id="ordersAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            How do I track my order?
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#ordersAccordion">
+                        <div class="accordion-body">
+                            <p>You can track your order by following these steps:</p>
+                            <ol>
+                                <li>Log in to your account</li>
+                                <li>Go to "My Orders" in the Account dropdown</li>
+                                <li>Find your order in the list and click on "Track"</li>
+                                <li>You'll see the current status and estimated delivery date</li>
+                            </ol>
+                            <p>You can also track your order using the order number and email address on our <a href="#">Order Tracking page</a>.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            What are your shipping options and costs?
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#ordersAccordion">
+                        <div class="accordion-body">
+                            <p>We offer the following shipping options:</p>
+                            <ul>
+                                <li><strong>Standard Shipping:</strong> Free for orders over $50 (3-5 business days)</li>
+                                <li><strong>Express Shipping:</strong> $9.99 (1-2 business days)</li>
+                                <li><strong>Same-Day Delivery:</strong> $14.99 (Available in select areas)</li>
+                            </ul>
+                            <p>Shipping costs and delivery times may vary based on your location and the items in your order.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            How do I return an item?
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#ordersAccordion">
+                        <div class="accordion-body">
+                            <p>To return an item, please follow these steps:</p>
+                            <ol>
+                                <li>Log in to your account</li>
+                                <li>Go to "My Orders" and find the order containing the item you want to return</li>
+                                <li>Click on "Return Item" and follow the instructions</li>
+                                <li>Print the return label and attach it to your package</li>
+                                <li>Drop off the package at your nearest shipping location</li>
+                            </ol>
+                            <p>We offer a 30-day return policy for most items. Please note that some products may have different return policies.</p>
+                            <p>For more information, please see our <a href="#">Return Policy</a>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Account Help -->
+    <div class="help-section" id="account">
+        <div class="container">
+            <h2 class="mb-4">Account Help</h2>
+            <div class="accordion" id="accountAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingFour">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                            How do I create an account?
+                        </button>
+                    </h2>
+                    <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingFour" data-bs-parent="#accountAccordion">
+                        <div class="accordion-body">
+                            <p>Creating an account is easy:</p>
+                            <ol>
+                                <li>Click on "Account" in the navigation bar</li>
+                                <li>Select "Register" from the dropdown menu</li>
+                                <li>Fill in your details in the registration form</li>
+                                <li>Click "Create Account"</li>
+                            </ol>
+                            <p>You'll receive a confirmation email. Click the link in the email to verify your account.</p>
+                            <p>You can also create an account during checkout if you don't have one already.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingFive">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                            I forgot my password. How do I reset it?
+                        </button>
+                    </h2>
+                    <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accountAccordion">
+                        <div class="accordion-body">
+                            <p>If you've forgotten your password, follow these steps to reset it:</p>
+                            <ol>
+                                <li>Click on "Account" in the navigation bar</li>
+                                <li>Select "Login" from the dropdown menu</li>
+                                <li>Click on "Forgot Password?" below the login form</li>
+                                <li>Enter your email address and click "Reset Password"</li>
+                                <li>Check your email for a password reset link</li>
+                                <li>Click the link and follow the instructions to create a new password</li>
+                            </ol>
+                            <p>The password reset link is valid for 24 hours. If you don't see the email, please check your spam folder.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingSix">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                            How do I update my personal information?
+                        </button>
+                    </h2>
+                    <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#accountAccordion">
+                        <div class="accordion-body">
+                            <p>To update your personal information:</p>
+                            <ol>
+                                <li>Log in to your account</li>
+                                <li>Click on "Account" in the navigation bar</li>
+                                <li>Select "My Profile" from the dropdown menu</li>
+                                <li>Click "Edit" next to the information you want to update</li>
+                                <li>Make your changes and click "Save"</li>
+                            </ol>
+                            <p>You can update your name, email address, phone number, and shipping addresses from your profile page.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Issues -->
+    <div class="help-section bg-light" id="payment">
+        <div class="container">
+            <h2 class="mb-4">Payment Issues</h2>
+            <div class="accordion" id="paymentAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingSeven">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven">
+                            What payment methods do you accept?
+                        </button>
+                    </h2>
+                    <div id="collapseSeven" class="accordion-collapse collapse show" aria-labelledby="headingSeven" data-bs-parent="#paymentAccordion">
+                        <div class="accordion-body">
+                            <p>We accept the following payment methods:</p>
+                            <ul>
+                                <li>Credit/Debit Cards (Visa, Mastercard, American Express)</li>
+                                <li>PayPal</li>
+                                <li>Apple Pay</li>
+                                <li>Google Pay</li>
+                                <li>Bank Transfer</li>
+                                <li>Gift Cards</li>
+                            </ul>
+                            <p>All payments are securely processed and encrypted.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingEight">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                            How do I get a refund?
+                        </button>
+                    </h2>
+                    <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#paymentAccordion">
+                        <div class="accordion-body">
+                            <p>To request a refund:</p>
+                            <ol>
+                                <li>Log in to your account</li>
+                                <li>Go to "My Orders" and find the order you want to be refunded</li>
+                                <li>Click on "Return Item" and select "Refund" as your preferred option</li>
+                                <li>Follow the instructions to complete the return process</li>
+                            </ol>
+                            <p>Once we receive your returned item, we'll process your refund within 3-5 business days. The refund will be issued to your original payment method.</p>
+                            <p>For digital products or services, please contact our customer support team for refund assistance.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingNine">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                            Can I change my payment method after placing an order?
+                        </button>
+                    </h2>
+                    <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine" data-bs-parent="#paymentAccordion">
+                        <div class="accordion-body">
+                            <p>Once an order has been placed, you cannot change the payment method directly. However, you have a few options:</p>
+                            <ul>
+                                <li>If your order hasn't been processed yet, you can cancel it and place a new order with the desired payment method.</li>
+                                <li>If your order has already been processed, you can contact our customer support team for assistance.</li>
+                            </ul>
+                            <p>For subscription services, you can update your payment method for future billing cycles in your account settings.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Us -->
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Still Need Help?</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4><i class="bi-chat-dots text-primary me-2"></i> Live Chat</h4>
+                        <p>Chat with our support team in real-time.</p>
+                        <p><strong>Hours:</strong> 9am - 8pm, Monday to Friday</p>
+                        <button class="btn btn-primary">Start Chat</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4><i class="bi-envelope text-primary me-2"></i> Email Support</h4>
+                        <p>Send us an email and we'll get back to you within 24 hours.</p>
+                        <p><strong>Email:</strong> support@e-shop.com</p>
+                        <a href="mailto:support@e-shop.com" class="btn btn-primary">Email Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4><i class="bi-telephone text-primary me-2"></i> Phone Support</h4>
+                        <p>Call us for immediate assistance.</p>
+                        <p><strong>Phone:</strong> +27 21 551 5500</p>
+                        <p><strong>Hours:</strong> 9am - 5pm, Monday to Friday</p>
+                        <a href="tel:+27215515500" class="btn btn-primary">Call Us</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4><i class="bi-question-circle text-primary me-2"></i> FAQs</h4>
+                        <p>Browse our frequently asked questions for quick answers.</p>
+                        <a href="faqpage.html" class="btn btn-primary">View FAQs</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+    <script src="footer.js"></script>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Start chat button functionality
+        document.querySelector('.btn-primary').addEventListener('click', function() {
+            alert('Our live chat feature is currently being implemented. Please email us at support@e-shop.com for assistance.');
+        });
+    </script>
+</body>
+</html>

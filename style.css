@@ -1,0 +1,167 @@
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        /* Ensure the whole page takes at least the full height of the viewport */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Make the main content expand to push the footer down */
+.container {
+    flex: 1;
+}
+
+/* Footer stays at the bottom */
+.footer {
+    background-color: #343a40;
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+}
+        .navbar-brand {
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .hero-section {
+            background-color: #f8f9fa;
+            padding: 5rem 0;
+        }
+        .product-card {
+            transition: transform 0.3s;
+            margin-bottom: 1.5rem;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .category-sidebar {
+            background-color: #f8f9fa;
+            padding: 1rem;
+        }
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 2rem 0;
+        }
+        .help-card {
+            transition: transform 0.3s;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+        }
+        .help-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .help-topic {
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 0.25rem;
+            margin-bottom: 1rem;
+        }
+        .help-section {
+            padding: 2rem 0;
+        }
+        .accordion-button:not(.collapsed) {
+            background-color: rgba(0, 123, 255, 0.1);
+            color: var(--primary-color);
+        }
+        .policy-section {
+            margin-bottom: 2rem;
+        }
+        .policy-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        .table-of-contents {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 0.25rem;
+            margin-bottom: 2rem;
+        }
+        .table-of-contents a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .table-of-contents a:hover {
+            text-decoration: underline;
+        }
+        .last-updated {
+            font-style: italic;
+            color: var(--secondary-color);
+        }
+        .policy-section {
+            margin-bottom: 2rem;
+        }
+        .policy-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        .table-of-contents {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 0.25rem;
+            margin-bottom: 2rem;
+        }
+        .table-of-contents a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .table-of-contents a:hover {
+            text-decoration: underline;
+        }
+        .last-updated {
+            font-style: italic;
+            color: var(--secondary-color);
+        }
+        .policy-section {
+            margin-bottom: 2rem;
+        }
+        .policy-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        .table-of-contents {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 0.25rem;
+            margin-bottom: 2rem;
+        }
+        .table-of-contents a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .table-of-contents a:hover {
+            text-decoration: underline;
+        }
+        .last-updated {
+            font-style: italic;
+            color: var(--secondary-color);
+        }
+        .category-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 1.5rem;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .category-card img {
+            height: 200px;
+            object-fit: cover;
+        }

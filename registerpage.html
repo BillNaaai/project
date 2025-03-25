@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - E-Shop</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <div id="navigation-container"></div>
+    <script src="navigation.js"></script>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <div class="register-container">
+            <h1 class="text-center mb-4">Create an Account</h1>
+            
+            <div class="card register-card">
+                <div class="card-body p-4">
+                    <form id="registerForm">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="firstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="firstName" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" required>
+                            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" required>
+                            <div class="form-text">Must be at least 8 characters with a number and special character.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="termsAgreement" required>
+                            <label class="form-check-label" for="termsAgreement">
+                                I agree to the <a href="termsandconditionspage.html">Terms and Conditions</a> and <a href="privacypage.html">Privacy Policy</a>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 py-2">Create Account</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <p>Already have an account? <a href="loginpage.html">Sign in</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+    <script src="footer.js"></script>
+
+    <!-- Add the registration AJAX script at the bottom -->
+    <script>
+        $(document).ready(function() {
+    $('#registerForm').submit(function(e) {
+        e.preventDefault();
+
+        const userData = {
+            first_name: $('#firstName').val(),
+            last_name: $('#lastName').val(),
+            email: $('#email').val(),
+            phone: $('#phone').val(),
+            password: $('#password').val()
+        };
+
+        // Basic validation
+        const password = $('#password').val();
+        const confirmPassword = $('#confirmPassword').val();
+
+        if (password !== confirmPassword) {
+            alert("Passwords do not match!");
+            return;
+        }
+
+        if (password.length < 8 || !/\d/.test(password) || !/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+            alert("Password must be at least 8 characters long and contain at least one number and one special character.");
+            return;
+        }
+
+        console.log("Sending registration data:", userData); // ✅ Debugging: Log request data
+
+        // Send registration request to server
+        $.ajax({
+            url: 'http://localhost/project/register.php', // ✅ Ensure correct backend URL
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(userData),
+            success: function(response) {
+                console.log("Server response:", response); // ✅ Debugging: Log response
+                alert("Registration successful!");
+                window.location.href = "loginpage.html";
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX Error:", status, error);
+                console.error("Full Response:", xhr.responseText);
+                alert(xhr.responseJSON?.error || "Registration failed.");
+            }
+        });
+    });
+});
+    </script>
+</body>
+</html>

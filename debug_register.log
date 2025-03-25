@@ -1,0 +1,58 @@
+Script started
+Script started
+Script started
+Database connection successful
+Received Data: null
+Error: No JSON data received
+Script started
+Database connection successful
+Received Data: {"first_name":"Kieran","last_name":"Stadler","email":"stadlerkieran@gmail.com","phone":"0784733187","password":"password123!"}
+Inserted User: stadlerkieran@gmail.com
+Script started
+Database connection successful
+Received Data: null
+Error: No JSON data received
+Script started
+Database connection successful
+Received Data: {"first_name":"Kierans","last_name":"Stadlerg","email":"stadlerkieran1@gmail.com","phone":"0784733187","password":"password123!"}
+Inserted User: stadlerkieran1@gmail.com
+Script started
+Database connection successful
+Received Data: null
+Error: No JSON data received
+Script started
+Database connection successful
+Received Data: {"first_name":"Adrian","last_name":"Stadler","email":"stads@mweb.co.za","phone":"1234567890","password":"admin01!"}
+Inserted User: stads@mweb.co.za
+Script started
+Database connection successful
+Received Data: null
+Error: No JSON data received
+Script started
+Database connection successful
+Received Data: {"first_name":"luce","last_name":"drrt","email":"luca@idk.com","phone":"078473318e","password":"admin01!"}
+Inserted User: luca@idk.com
+Script started
+Database connection successful
+Received Data: null
+Error: No JSON data received
+Script started
+Database connection successful
+Received Data: {"first_name":"adrian","last_name":"stadler","email":"dsagvyhvbdyu@vhusdujv.com","phone":"0784733187","password":"admin01!"}
+Inserted User: dsagvyhvbdyu@vhusdujv.com
+Script started
+Database connection successful
+Received Data: null
+Error: No JSON data received
+Script started
+Database connection successful
+Received Data: {"first_name":"Poeskop","last_name":"Best","email":"dylan@example.com","phone":"0784733187","password":"admin01!"}
+Inserted User: dylan@example.com
+Script started
+Database connection successful
+Received Data: null
+Error: No JSON data received
+Script started
+Database connection successful
+Received Data: {"first_name":"Luke","last_name":"IDK","email":"luke@gmail.com","phone":"0784733187","password":"password123!"}
+Inserted User: luke@gmail.com

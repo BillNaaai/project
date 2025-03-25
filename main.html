@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Platform</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+<!-- Navigation -->
+<div id="navigation-container"></div>
+
+<script src="navigation.js"></script>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <div class="row">
+            <!-- Category Sidebar needed here or in products page?-->
+            <div class="col-lg-3">
+                <div class="category-sidebar">
+                    <h5>Categories</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Electronics
+                            <span class="badge bg-primary rounded-pill">42</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Clothing
+                            <span class="badge bg-primary rounded-pill">12</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Home & Garden
+                            <span class="badge bg-primary rounded-pill">8</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Sports
+                            <span class="badge bg-primary rounded-pill">14</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Books
+                            <span class="badge bg-primary rounded-pill">22</span>
+                        </li>
+                    </ul>
+                    
+                    <h5 class="mt-4">Filter by Price</h5>
+                    <div class="p-3">
+                        <input type="range" class="form-range" min="0" max="1000" step="10" id="priceRange">
+                        <div class="d-flex justify-content-between">
+                            <span>$0</span>
+                            <span>$1000</span>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary1 w-100 mt-3">Apply Filters</button>
+                </div>
+            </div>
+            
+            <!-- Products Grid (hard coded, good for reuse once db set up)-->
+            <div class="col-lg-9">
+                <h2>Featured Products</h2>
+                <div class="row">
+                    <!-- Product Card 1 -->
+                    <div class="col-md-4">
+                        <div class="card product-card">
+                            <img src="/api/placeholder/300/200" class="card-img-top" alt="Product Image">
+                            <div class="card-body">
+                                <h5 class="card-title">Wireless Headphones</h5>
+                                <p class="card-text text-truncate">High-quality wireless headphones with noise cancellation.</p>
+                                <p class="card-text fw-bold">$129.99</p>
+                                <div class="d-flex justify-content-between">
+                                    <button class="btn btn-primary">Add to Cart</button>
+                                    <button class="btn btn-outline-secondary">
+                                        <i class="bi-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product Card 2 -->
+                    <div class="col-md-4">
+                        <div class="card product-card">
+                            <img src="/api/placeholder/300/200" class="card-img-top" alt="Product Image">
+                            <div class="card-body">
+                                <h5 class="card-title">Smart Watch</h5>
+                                <p class="card-text text-truncate">Fitness tracker with heart rate monitoring.</p>
+                                <p class="card-text fw-bold">$89.99</p>
+                                <div class="d-flex justify-content-between">
+                                    <button class="btn btn-primary">Add to Cart</button>
+                                    <button class="btn btn-outline-secondary">
+                                        <i class="bi-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product Card 3 -->
+                    <div class="col-md-4">
+                        <div class="card product-card">
+                            <img src="/api/placeholder/300/200" class="card-img-top" alt="Product Image">
+                            <div class="card-body">
+                                <h5 class="card-title">Laptop Backpack</h5>
+                                <p class="card-text text-truncate">Water-resistant backpack with USB charging port.</p>
+                                <p class="card-text fw-bold">$49.99</p>
+                                <div class="d-flex justify-content-between">
+                                    <button class="btn btn-primary">Add to Cart</button>
+                                    <button class="btn btn-outline-secondary">
+                                        <i class="bi-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <script src="footer.js"></script>
+
+
+    <script>
+        // Basic functionality for the e-commerce site
+        $(document).ready(function() {
+            // Add to cart functionality
+            $('.btn-primary').click(function() {
+                alert('Product added to cart!');
+            });
+            
+            // Price range filter
+            $('#priceRange').on('input', function() {
+                const value = $(this).val();
+                $('#priceValue').text('$' + value);
+            });
+        });
+    </script>
+</body>
+</html>
