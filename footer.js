@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="col-md-3">
                     <h5>Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="main.html" class="text-white">Home</a></li>
+                        <li><a href="index.html" class="text-white">Home</a></li>
                         <li><a href="productpage.html" class="text-white">Products</a></li>
                         <li><a href="categoriespage.html" class="text-white">Categories</a></li>
                         <li><a href="aboutuspage.html" class="text-white">About Us</a></li>

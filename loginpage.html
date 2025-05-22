@@ -107,7 +107,7 @@
 
                     sessionStorage.setItem("user", JSON.stringify(response.user));
                     console.log("✅ User stored in sessionStorage:", sessionStorage.getItem("user"));
-                    window.location.href = "main.html";
+                    window.location.href = "index.html";
                 } else {
                     alert(response.error || "Invalid login credentials.");
                 }

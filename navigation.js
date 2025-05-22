@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("navigation-container").innerHTML = `
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="main.html">E-Shop</a>
+                <a class="navbar-brand" href="index.html">E-Shop</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("logoutBtn").addEventListener("click", function () {
             sessionStorage.removeItem("user"); // Remove session
             alert("Successfully logged out!"); // ✅ Show logout popup
-            window.location.href = "main.html"; // ✅ Redirect after logout
+            window.location.href = "index.html"; // ✅ Redirect after logout
         });
     }
 });
