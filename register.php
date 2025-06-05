@@ -1,50 +1,73 @@
 <?php
-// ✅ Start debugging log
-file_put_contents("debug_register.log", "Script started\n", FILE_APPEND);
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
+header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Headers: Content-Type");
 
-require 'db.php';
+require 'db.php'; // This gives us $conn (MySQLi), not $pdo
 
-// ✅ Log database connection check
-if (!isset($pdo)) {
-    file_put_contents("debug_register.log", "Database connection failed!\n", FILE_APPEND);
-    die(json_encode(["error" => "Database connection failed"]));
-} else {
-    file_put_contents("debug_register.log", "Database connection successful\n", FILE_APPEND);
-}
-
-// ✅ Read JSON input and log it
+// Get and decode JSON input
 $data = json_decode(file_get_contents("php://input"), true);
-file_put_contents("debug_register.log", "Received Data: " . json_encode($data) . "\n", FILE_APPEND);
 
-if (!$data) {
-    file_put_contents("debug_register.log", "Error: No JSON data received\n", FILE_APPEND);
-    die(json_encode(["error" => "No JSON data received"]));
+// Validate input
+if (
+    !$data ||
+    !isset($data["first_name"], $data["last_name"], $data["email"], $data["phone"], $data["password"])
+) {
+    echo json_encode(["error" => "Invalid input"]);
+    exit();
 }
 
-if (isset($data["first_name"], $data["last_name"], $data["email"], $data["password"])) {
-    $first_name = htmlspecialchars($data["first_name"]);
-    $last_name = htmlspecialchars($data["last_name"]);
-    $email = filter_var($data["email"], FILTER_SANITIZE_EMAIL);
-    $phone = htmlspecialchars($data["phone"] ?? "");
-    $password_hash = $data["password"]; // 🚨 Plain text password (Insecure)
+$first_name = htmlspecialchars($data["first_name"]);
+$last_name = htmlspecialchars($data["last_name"]);
+$email = filter_var($data["email"], FILTER_SANITIZE_EMAIL);
+$phone = htmlspecialchars($data["phone"]);
+$password = $data["password"];
 
-    try {
-        $stmt = $pdo->prepare("INSERT INTO users (first_name, last_name, email, phone, password_hash) VALUES (?, ?, ?, ?, ?)");
-        $stmt->execute([$first_name, $last_name, $email, $phone, $password_hash]);
+// Hash the password before storing
+$password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-        // ✅ Log successful insert
-        file_put_contents("debug_register.log", "Inserted User: $email\n", FILE_APPEND);
-        echo json_encode(["message" => "Registration successful"]);
-    } catch (PDOException $e) {
-        file_put_contents("debug_register.log", "Database error: " . $e->getMessage() . "\n", FILE_APPEND);
-        die(json_encode(["error" => "Database error: " . $e->getMessage()]));
+try {
+    // Check if user already exists
+    $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
+
+    if ($stmt->num_rows > 0) {
+        echo json_encode(["error" => "User already exists"]);
+        exit();
     }
-} else {
-    file_put_contents("debug_register.log", "Error: Invalid input\n", FILE_APPEND);
-    die(json_encode(["error" => "Invalid input"]));
+    $stmt->close();
+
+    // Insert user
+    $stmt = $conn->prepare("INSERT INTO users (first_name, last_name, email, phone, password_hash, created_at)
+                            VALUES (?, ?, ?, ?, ?, NOW())");
+    $stmt->bind_param("sssss", $first_name, $last_name, $email, $phone, $password_hash);
+    $stmt->execute();
+
+    // Return user data to auto-login
+    echo json_encode([
+        "message" => "Registration successful",
+        "user" => [
+            "id" => $stmt->insert_id,
+            "first_name" => $first_name,
+            "last_name" => $last_name,
+            "email" => $email,
+            "phone" => $phone,
+            "address" => null,
+            "business_name" => null
+        ]
+    ]);
+
+    $stmt->close();
+    $conn->close();
+
+} catch (Exception $e) {
+    echo json_encode(["error" => "Database error: " . $e->getMessage()]);
+    exit();
 }
 ?>

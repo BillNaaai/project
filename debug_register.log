@@ -56,3 +56,19 @@ Script started
 Database connection successful
 Received Data: {"first_name":"Luke","last_name":"IDK","email":"luke@gmail.com","phone":"0784733187","password":"password123!"}
 Inserted User: luke@gmail.com
+Script started
+Database connection successful
+Received Data: null
+Error: No JSON data received
+Script started
+Database connection successful
+Received Data: {"first_name":"Kieran","last_name":"Stadler","email":"stadlerkieran@gmail.com","phone":"0784733187","password":"admin01!"}
+Database error: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'stadlerkieran@gmail.com' for key 'users.email'
+Script started
+Database connection successful
+Received Data: null
+Error: No JSON data received
+Script started
+Database connection successful
+Received Data: {"first_name":"Kieran","last_name":"Stadler","email":"admin@admin.co.za","phone":"0784733187","password":"password123!"}
+Inserted User: admin@admin.co.za

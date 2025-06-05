@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sell an Item | E-Shop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <div id="navigation-container"></div>
+  <script src="navigation.js"></script>
+
+  <!-- Page Content -->
+  <main class="container my-5">
+    <h1 class="text-center text-primary">Sell a New Item</h1>
+
+    <form id="sellForm" class="p-4 border rounded shadow-sm bg-light">
+      <div class="mb-3">
+        <label for="title" class="form-label">Item Title</label>
+        <input type="text" class="form-control" id="title" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" rows="4" required></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="price" class="form-label">Price (R)</label>
+        <input type="number" step="0.01" class="form-control" id="price" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <select class="form-select" id="category" required>
+          <option value="">-- Select a Category --</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Clothing">Clothing</option>
+          <option value="Home & Garden">Home & Garden</option>
+          <option value="Sports">Sports</option>
+          <option value="Books">Books</option>
+          <option value="Beauty & Personal Care">Beauty & Personal Care</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="image_url" class="form-label">Image URL (Optional)</label>
+        <input type="text" class="form-control" id="image_url">
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <button type="submit" class="btn btn-success">List Item for Sale</button>
+        <a href="sellerdashboard.html" class="btn btn-secondary">Cancel</a>
+      </div>
+    </form>
+  </main>
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
+  <script src="footer.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Listing Logic -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const user = JSON.parse(sessionStorage.getItem("user"));
+      if (!user) {
+        alert("You must be logged in to list an item.");
+        window.location.href = "loginpage.html";
+        return;
+      }
+
+      document.getElementById("sellForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const payload = {
+          title: document.getElementById("title").value.trim(),
+          description: document.getElementById("description").value.trim(),
+          price: document.getElementById("price").value,
+          category: document.getElementById("category").value.trim(),
+          image_url: document.getElementById("image_url").value.trim(),
+          user_id: user.id
+        };
+
+        const res = await fetch("create_item.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          alert("Item listed successfully!");
+          window.location.href = "sellerdashboard.html";
+        } else {
+          alert(data.error || "Failed to list item.");
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

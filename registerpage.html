@@ -36,7 +36,7 @@
 
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" required>
+                            <input type="email" class="form-control" id="email" required>
                             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                         </div>
 
@@ -78,55 +78,73 @@
     <div id="footer-container"></div>
     <script src="footer.js"></script>
 
-    <!-- Add the registration AJAX script at the bottom -->
+    <!-- AJAX Registration with Auto Login -->
     <script>
-        $(document).ready(function() {
-    $('#registerForm').submit(function(e) {
-        e.preventDefault();
+        $(document).ready(function () {
+            $('#registerForm').submit(function (e) {
+                e.preventDefault();
 
-        const userData = {
-            first_name: $('#firstName').val(),
-            last_name: $('#lastName').val(),
-            email: $('#email').val(),
-            phone: $('#phone').val(),
-            password: $('#password').val()
-        };
+                const password = $('#password').val();
+                const confirmPassword = $('#confirmPassword').val();
+                const phone = $('#phone').val().trim();
 
-        // Basic validation
-        const password = $('#password').val();
-        const confirmPassword = $('#confirmPassword').val();
 
-        if (password !== confirmPassword) {
-            alert("Passwords do not match!");
-            return;
-        }
+                if (password !== confirmPassword) {
+                    alert("Passwords do not match.");
+                    return;
+                }
 
-        if (password.length < 8 || !/\d/.test(password) || !/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-            alert("Password must be at least 8 characters long and contain at least one number and one special character.");
-            return;
-        }
+                if (password.length < 8 || !/\d/.test(password) || !/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+                    alert("Password must be at least 8 characters long and contain a number and special character.");
+                    return;
+                }
 
-        console.log("Sending registration data:", userData); // ✅ Debugging: Log request data
+                if (!/^\d{10,}$/.test(phone)) {
+                    alert("Phone number must contain at least 10 digits and no letters.");
+                    return;
+                }
 
-        // Send registration request to server
-        $.ajax({
-            url: 'http://localhost/project/register.php', // ✅ Ensure correct backend URL
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(userData),
-            success: function(response) {
-                console.log("Server response:", response); // ✅ Debugging: Log response
-                alert("Registration successful!");
-                window.location.href = "loginpage.html";
-            },
-            error: function(xhr, status, error) {
-                console.error("AJAX Error:", status, error);
-                console.error("Full Response:", xhr.responseText);
-                alert(xhr.responseJSON?.error || "Registration failed.");
-            }
+                const formData = {
+                    first_name: $('#firstName').val(),
+                    last_name: $('#lastName').val(),
+                    email: $('#email').val(),
+                    phone: phone,
+                    password: password
+                };
+
+                $.ajax({
+                    url: 'http://localhost/project/register.php',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    success: function (response) {
+                        console.log("Server response:", response);
+
+                        if (typeof response === "string") {
+                            try {
+                                response = JSON.parse(response);
+                            } catch (e) {
+                                alert("Unexpected response from server.");
+                                return;
+                            }
+                        }
+
+                        if (response.message === "Registration successful" && response.user) {
+                            sessionStorage.setItem("user", JSON.stringify(response.user));
+                            alert("Registration successful! You are now logged in.");
+                            console.log("Redirecting to index.html...");
+                            window.location.href = "index.html"; // Redirect to homepage
+                        } else {
+                            alert(response.error || "Registration failed.");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("AJAX error:", error);
+                        alert("Registration failed.");
+                    }
+                });
+            });
         });
-    });
-});
     </script>
 </body>
 </html>

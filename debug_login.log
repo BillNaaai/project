@@ -214,3 +214,200 @@ Received Data: {"email":"luke@gmail.com","password":"password123!"}
 Searching for user: luke@gmail.com
 User found: {"id":9,"first_name":"Luke","email":"luke@gmail.com","password_hash":"password123!"}
 Login successful for: luke@gmail.com
+Login request received
+Received Data: null
+Error: No JSON data received
+Login request received
+Received Data: {"email":"stadlerkieran@gmail.com","password":"admin01!"}
+Searching for user: stadlerkieran@gmail.com
+User found: {"id":3,"first_name":"Kieran","email":"stadlerkieran@gmail.com","password_hash":"password123!"}
+Password mismatch for: stadlerkieran@gmail.com
+Login request received
+Received Data: null
+Error: No JSON data received
+Login request received
+Received Data: {"email":"luke@gmail.com","password":"password123!"}
+Searching for user: luke@gmail.com
+User found: {"id":9,"first_name":"Luke","email":"luke@gmail.com","password_hash":"password123!"}
+Login successful for: luke@gmail.com
+Login request received
+Received Data: null
+Error: No JSON data received
+Login request received
+Received Data: {"email":"stadlerkieran@gmail.com","password":"Password123!"}
+Searching for user: stadlerkieran@gmail.com
+User found: {"id":3,"first_name":"Kieran","email":"stadlerkieran@gmail.com","password_hash":"password123!"}
+Password mismatch for: stadlerkieran@gmail.com
+Login request received
+Received Data: null
+Error: No JSON data received
+Login request received
+Received Data: {"email":"stadlerkieran@gmail.com","password":"password123!"}
+Searching for user: stadlerkieran@gmail.com
+User found: {"id":3,"first_name":"Kieran","email":"stadlerkieran@gmail.com","password_hash":"password123!"}
+Login successful for: stadlerkieran@gmail.com
+Login request received
+Received Data: null
+Error: No JSON data received
+Login request received
+Received Data: {"email":"stadlerkieran@gmail.com","password":"password123!"}
+Searching for user: stadlerkieran@gmail.com
+User found: {"id":3,"first_name":"Kieran","email":"stadlerkieran@gmail.com","password_hash":"password123!"}
+Login successful for: stadlerkieran@gmail.com
+Login request received
+Received Data: null
+Error: No JSON data received
+Login request received
+Received Data: {"email":"stadlerkieran@gmail.com","password":"password123!"}
+Searching for user: stadlerkieran@gmail.com
+User found: {"id":3,"first_name":"Kieran","email":"stadlerkieran@gmail.com","password_hash":"password123!"}
+Login successful for: stadlerkieran@gmail.com
+Login request received
+Received Data: null
+Error: No JSON data received
+Login request received
+Received Data: {"email":"stadlerkieran@gmail.com","password":"password123!"}
+Searching for user: stadlerkieran@gmail.com
+User found: {"id":3,"first_name":"Kieran","email":"stadlerkieran@gmail.com","password_hash":"password123!"}
+Login successful for: stadlerkieran@gmail.com
+Login request received
+Received Data: null
+Error: No JSON data received
+Login request received
+Received Data: {"email":"stadlerkieran@gmail.com","password":"admin01!"}
+Searching for user: stadlerkieran@gmail.com
+User found: {"id":3,"first_name":"Kieran","email":"stadlerkieran@gmail.com","password_hash":"password123!"}
+Password mismatch for: stadlerkieran@gmail.com
+Login request received
+Received Data: null
+Error: No JSON data received
+Login request received
+Received Data: {"email":"stadlerkieran@gmail.com","password":"password123!"}
+Searching for user: stadlerkieran@gmail.com
+User found: {"id":3,"first_name":"Kieran","email":"stadlerkieran@gmail.com","password_hash":"password123!"}
+Login successful for: stadlerkieran@gmail.com
+Login request received
+Received Data: null
+Error: No JSON data received
+Login request received
+Received Data: {"email":"stadlerkieran@gmail.com","password":"password123!"}
+Searching for user: stadlerkieran@gmail.com
+User found: {"id":3,"first_name":"Kieran","email":"stadlerkieran@gmail.com","password_hash":"password123!"}
+Login successful for: stadlerkieran@gmail.com
+Login request received
+Received Data: null
+Error: No JSON data received
+Login request received
+Received Data: {"email":"stadlerkieran@gmail.com","password":"password123!"}
+Searching for user: stadlerkieran@gmail.com
+User found: {"id":3,"first_name":"Kieran","email":"stadlerkieran@gmail.com","password_hash":"password123!"}
+Login successful for: stadlerkieran@gmail.com
+Login request received
+Received Data: null
+Error: No JSON data received
+Login request received
+Received Data: {"email":"stadlerkieran@gmail.com","password":"password123!"}
+Searching for user: stadlerkieran@gmail.com
+User found: {"id":3,"first_name":"Kieran","email":"stadlerkieran@gmail.com","password_hash":"password123!"}
+Login successful for: stadlerkieran@gmail.com
+Login request received
+Received Data: null
+Error: No JSON data received
+Login request received
+Received Data: {"email":"strkieran@gmail.com","password":"password123!"}
+Searching for user: strkieran@gmail.com
+User found: {"id":18,"first_name":"Kieran","email":"strkieran@gmail.com","password_hash":"password123!"}
+Login successful for: strkieran@gmail.com
+Login request received
+Received Data: null
+Error: No JSON data received
+Login request received
+Received Data: {"email":"stadlerkieran@gmail.com","password":"password123!"}
+Searching for user: stadlerkieran@gmail.com
+User found: {"id":3,"first_name":"Kieran","email":"stadlerkieran@gmail.com","password_hash":"password123!"}
+Login successful for: stadlerkieran@gmail.com
+Login request received
+Received Data: null
+Error: No JSON data received
+Login request received
+Received Data: {"email":"strkieran@gmail.com","password":"password123!"}
+Searching for user: strkieran@gmail.com
+User found: {"id":18,"first_name":"Kieran","email":"strkieran@gmail.com","password_hash":"password123!"}
+Login successful for: strkieran@gmail.com
+Login request received
+Received Data: null
+Error: No JSON data received
+Login request received
+Received Data: {"email":"strkieran@gmail.com","password":"password123!"}
+Searching for user: strkieran@gmail.com
+User found: {"id":18,"first_name":"Kieran","email":"strkieran@gmail.com","password_hash":"password123!"}
+Login successful for: strkieran@gmail.com
+Login request received
+Received Data: null
+Error: No JSON data received
+Login request received
+Received Data: {"email":"strkieran@gmail.com","password":"password123!"}
+Searching for user: strkieran@gmail.com
+User found: {"id":18,"first_name":"Kieran","email":"strkieran@gmail.com","password_hash":"password123!"}
+Login successful for: strkieran@gmail.com
+Login request received
+Received Data: {"email":"strkieran@gmail.com","password":"password123!"}
+Searching for user: strkieran@gmail.com
+User found: {"id":18,"first_name":"Kieran","email":"strkieran@gmail.com","password_hash":"password123!"}
+Login successful for: strkieran@gmail.com
+Login request received
+Received Data: null
+Error: No JSON data received
+Login request received
+Received Data: {"email":"n@gmail.com","password":"password123!"}
+Searching for user: n@gmail.com
+User found: {"id":24,"first_name":"Kieran","email":"n@gmail.com","password_hash":"password123!"}
+Login successful for: n@gmail.com
+Login request received
+Received Data: null
+Error: No JSON data received
+Login request received
+Received Data: {"email":"n@gmail.com","password":"password123!"}
+Searching for user: n@gmail.com
+User found: {"id":24,"first_name":"Kieran","email":"n@gmail.com","password_hash":"password123!"}
+Login successful for: n@gmail.com
+Login request received
+Received Data: null
+Error: No JSON data received
+Login request received
+Received Data: {"email":"n@gmail.com","password":"password123!"}
+Searching for user: n@gmail.com
+User found: {"id":24,"first_name":"Kieran","email":"n@gmail.com","password_hash":"password123!"}
+Login successful for: n@gmail.com
+Login request received
+Received Data: null
+Error: No JSON data received
+Login request received
+Received Data: {"email":"n@gmail.com","password":"password123!"}
+Searching for user: n@gmail.com
+User found: {"id":24,"first_name":"Kieran","email":"n@gmail.com","last_name":"Stadler","phone":"078473316","address":null,"business_name":null,"password_hash":"password123!"}
+Login successful for: n@gmail.com
+Login request received
+Received Data: null
+Error: No JSON data received
+Login request received
+Received Data: {"email":"n@gmail.com","password":"password123!"}
+Searching for user: n@gmail.com
+User found: {"id":24,"first_name":"Kieran","email":"n@gmail.com","last_name":"Stadler","phone":"078473316","address":null,"business_name":null,"password_hash":"password123!"}
+Login successful for: n@gmail.com
+Login request received
+Received Data: null
+Error: No JSON data received
+Login request received
+Received Data: {"email":"n@gmail.com","password":"password123!"}
+Searching for user: n@gmail.com
+User found: {"id":24,"first_name":"Kieran","email":"n@gmail.com","last_name":"Stadler","phone":"078473316","address":null,"business_name":null,"password_hash":"password123!"}
+Login successful for: n@gmail.com
+Login request received
+Received Data: null
+Error: No JSON data received
+Login request received
+Received Data: {"email":"n@gmail.com","password":"password123!"}
+Searching for user: n@gmail.com
+User found: {"id":24,"first_name":"Kieran","email":"n@gmail.com","last_name":"Stadler","phone":"078473316","address":null,"business_name":null,"password_hash":"password123!"}
+Login successful for: n@gmail.com
