@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="products.html">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="productspage.html">Products</a></li>
                     <li class="nav-item"><a class="nav-link" href="categoriespage.html">Categories</a></li>
                     <li class="nav-item"><a class="nav-link" href="contactpage.html">Contact</a></li>
                 </ul>

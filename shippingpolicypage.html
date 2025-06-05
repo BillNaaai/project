@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shipping Policy | E-Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    
     <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
 
@@ -100,28 +103,37 @@
 
     
 
-    <button id="scrollToTopBtn" title="Go to top">
-    <i class="bi bi-arrow-up-circle-fill"></i>
-    </button>
-
-    <script>
-    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
-
-    window.addEventListener("scroll", () => {
-        scrollToTopBtn.style.display = window.scrollY > 200 ? "block" : "none";
-    });
-
-    scrollToTopBtn.addEventListener("click", () => {
-        window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-        });
-    });
-    </script>
+    
 
     <!-- Footer -->
-    <div id="footer-container"></div>
-    <script src="footer.js"></script>
+<div id="footer-container"></div>
+<script src="footer.js"></script>
+
+<!-- Scroll to Top Button -->
+<button id="scrollToTopBtn" title="Go to top">
+  <i class="bi bi-arrow-up-circle-fill"></i>
+</button>
+
+<!-- ✅ Bootstrap JS Bundle (REQUIRED for dropdowns) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+<!-- Scroll-to-top script -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+  window.addEventListener("scroll", () => {
+    scrollToTopBtn.style.display = window.scrollY > 200 ? "block" : "none";
+  });
+
+  scrollToTopBtn.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+});
+</script>
 
 </body>
 </html>

@@ -346,5 +346,27 @@
             alert('Our live chat feature is currently being implemented. Please email us at support@e-shop.com for assistance.');
         });
     </script>
+
+    <div id="footer-container"></div>
+    <script src="footer.js"></script>
+
+    <button id="scrollToTopBtn" title="Go to top">
+        <i class="bi bi-arrow-up-circle-fill"></i>
+    </button>
+
+    <script>
+    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+    window.addEventListener("scroll", () => {
+        scrollToTopBtn.style.display = window.scrollY > 200 ? "block" : "none";
+    });
+
+    scrollToTopBtn.addEventListener("click", () => {
+        window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+        });
+    });
+    </script>
 </body>
 </html>

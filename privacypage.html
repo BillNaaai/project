@@ -185,24 +185,25 @@
 <div id="footer-container"></div>
 <script src="footer.js"></script>
 
-<button id="scrollToTopBtn" title="Go to top">
-  <i class="bi bi-arrow-up-circle-fill"></i>
-</button>
 
-<script>
-  const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+    <button id="scrollToTopBtn" title="Go to top">
+        <i class="bi bi-arrow-up-circle-fill"></i>
+    </button>
 
-  window.addEventListener("scroll", () => {
-    scrollToTopBtn.style.display = window.scrollY > 200 ? "block" : "none";
-  });
+    <script>
+    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
 
-  scrollToTopBtn.addEventListener("click", () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
+    window.addEventListener("scroll", () => {
+        scrollToTopBtn.style.display = window.scrollY > 200 ? "block" : "none";
     });
-  });
-</script>
+
+    scrollToTopBtn.addEventListener("click", () => {
+        window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+        });
+    });
+    </script>
 
 </body>
 </html>

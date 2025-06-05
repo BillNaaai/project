@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 header("Content-Type: application/json");
 require_once 'db.php';
 
@@ -10,32 +13,30 @@ if (!isset($data['item_id'])) {
     exit;
 }
 
-$item_id = $data['item_id'];
+$item_id = intval($data['item_id']);
+
+// Optional fallback values (assume values are sent directly from the front-end)
+$title = isset($data['title']) ? htmlspecialchars($data['title']) : '';
+$description = isset($data['description']) ? htmlspecialchars($data['description']) : '';
+$price = isset($data['price']) ? floatval(str_replace(',', '.', $data['price'])) : 0.00;
+$category = isset($data['category']) ? htmlspecialchars($data['category']) : '';
+$image_url = isset($data['image_url']) ? htmlspecialchars($data['image_url']) : '';
 
 try {
-    // ✅ Fetch current item
-    $stmt = $conn->prepare("SELECT * FROM items WHERE id = ?");
-    $stmt->execute([$item_id]);
-    $existingItem = $stmt->fetch(PDO::FETCH_ASSOC);
+    // ✅ Prepare and bind
+    $stmt = $conn->prepare("UPDATE items SET title = ?, description = ?, price = ?, category = ?, image_url = ? WHERE id = ?");
+    $stmt->bind_param("ssdssi", $title, $description, $price, $category, $image_url, $item_id);
 
-    if (!$existingItem) {
-        echo json_encode(["error" => "Item not found"]);
-        exit;
+    if ($stmt->execute()) {
+        echo json_encode(["success" => true, "message" => "Item updated successfully"]);
+    } else {
+        echo json_encode(["success" => false, "error" => "Failed to update item"]);
     }
 
-    // ✅ Use sent values or fall back to existing ones
-    $title = isset($data['title']) ? htmlspecialchars($data['title']) : $existingItem['title'];
-    $description = isset($data['description']) ? htmlspecialchars($data['description']) : $existingItem['description'];
-    $price = isset($data['price']) ? floatval(str_replace(',', '.', $data['price'])) : $existingItem['price'];
-    $category = isset($data['category']) ? htmlspecialchars($data['category']) : $existingItem['category'];
-    $image_url = isset($data['image_url']) ? htmlspecialchars($data['image_url']) : $existingItem['image_url'];
-
-    // ✅ Update item
-    $update = $conn->prepare("UPDATE items SET title = ?, description = ?, price = ?, category = ?, image_url = ? WHERE id = ?");
-    $update->execute([$title, $description, $price, $category, $image_url, $item_id]);
-
-    echo json_encode(["success" => true, "message" => "Item updated successfully"]);
-} catch (PDOException $e) {
+    $stmt->close();
+    $conn->close();
+} catch (Exception $e) {
     http_response_code(500);
-    echo json_encode(["error" => "Database error: " . $e->getMessage()]);
+    echo json_encode(["error" => "Server error: " . $e->getMessage()]);
 }
+?>
