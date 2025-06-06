@@ -1,15 +1,16 @@
-        :root {
-            --primary-color: #007bff;
-            --secondary-color: #6c757d;
-            --success-color: #28a745;
-            --danger-color: #dc3545;
-            --warning-color: #ffc107;
-            --info-color: #17a2b8;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        /* Ensure the whole page takes at least the full height of the viewport */
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 html, body {
     height: 100%;
     margin: 0;
@@ -17,12 +18,10 @@ html, body {
     flex-direction: column;
 }
 
-/* Make the main content expand to push the footer down */
 .container {
     flex: 1;
 }
 
-/* Footer stays at the bottom */
 .footer {
     background-color: #343a40;
     color: white;
@@ -32,66 +31,141 @@ html, body {
     position: relative;
     bottom: 0;
 }
+
 .navbar-brand {
     font-weight: bold;
     letter-spacing: 1px;
 }
+
 .hero-section {
     background-color: #f8f9fa;
     padding: 5rem 0;
 }
+
 .product-card {
     transition: transform 0.3s;
     margin-bottom: 1.5rem;
 }
+
 .product-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 .category-sidebar {
     background-color: #f8f9fa;
     padding: 1rem;
 }
+
 .footer {
     background-color: #343a40;
     color: white;
     padding: 2rem 0;
 }
+
 .help-card {
     transition: transform 0.3s;
     margin-bottom: 1.5rem;
     border-left: 4px solid var(--primary-color);
 }
+
 .help-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 .help-topic {
     padding: 1.5rem;
     background-color: #f8f9fa;
     border-radius: 0.25rem;
     margin-bottom: 1rem;
 }
+
 .help-section {
     padding: 2rem 0;
 }
+
 .accordion-button:not(.collapsed) {
     background-color: rgba(0, 123, 255, 0.1);
     color: var(--primary-color);
 }
+
 .policy-section {
     margin-bottom: 2rem;
 }
+
 .policy-section h2 {
     color: var(--primary-color);
     margin-bottom: 1rem;
 }
+
 .table-of-contents {
     background-color: #f8f9fa;
     padding: 1.5rem;
     border-radius: 0.25rem;
     margin-bottom: 2rem;
 }
+
+.table-of-contents a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.table-of-contents a:hover {
+    text-decoration: underline;
+}
+
+.last-updated {
+    font-style: italic;
+    color: var(--secondary-color);
+}
+
+.policy-section {
+    margin-bottom: 2rem;
+}
+
+.policy-section h2 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.table-of-contents {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 0.25rem;
+    margin-bottom: 2rem;
+}
+
+.table-of-contents a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.table-of-contents a:hover {
+    text-decoration: underline;
+}
+
+.last-updated {
+    font-style: italic;
+    color: var(--secondary-color);
+}
+
+.policy-section {
+    margin-bottom: 2rem;
+}
+
+.policy-section h2 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.table-of-contents {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 0.25rem;
+    margin-bottom: 2rem;
+}
+
 .table-of-contents a {
     color: var(--primary-color);
     text-decoration: none;
@@ -99,58 +173,12 @@ html, body {
 .table-of-contents a:hover {
     text-decoration: underline;
 }
+
 .last-updated {
     font-style: italic;
     color: var(--secondary-color);
 }
-.policy-section {
-    margin-bottom: 2rem;
-}
-.policy-section h2 {
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-}
-.table-of-contents {
-    background-color: #f8f9fa;
-    padding: 1.5rem;
-    border-radius: 0.25rem;
-    margin-bottom: 2rem;
-}
-.table-of-contents a {
-    color: var(--primary-color);
-    text-decoration: none;
-}
-.table-of-contents a:hover {
-    text-decoration: underline;
-}
-.last-updated {
-    font-style: italic;
-    color: var(--secondary-color);
-}
-.policy-section {
-    margin-bottom: 2rem;
-}
-.policy-section h2 {
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-}
-.table-of-contents {
-    background-color: #f8f9fa;
-    padding: 1.5rem;
-    border-radius: 0.25rem;
-    margin-bottom: 2rem;
-}
-.table-of-contents a {
-    color: var(--primary-color);
-    text-decoration: none;
-}
-.table-of-contents a:hover {
-    text-decoration: underline;
-}
-.last-updated {
-    font-style: italic;
-    color: var(--secondary-color);
-}
+
 .category-card {
     transition: transform 0.3s, box-shadow 0.3s;
     margin-bottom: 1.5rem;
@@ -165,7 +193,6 @@ html, body {
     height: 200px;
     object-fit: cover;
 }
-
 
 .profile-container {
     max-width: 800px;
@@ -183,6 +210,7 @@ html, body {
     font-size: 32px;
     color: #333;
 }
+
 .profile-info {
     padding: 20px;
     margin-bottom: 30px;
@@ -196,10 +224,10 @@ html, body {
     font-size: 16px;
     color: #444;
 }
+
 .profile-info strong {
     color: #000;
 }
-
 
 .profile-form label {
     display: block;
@@ -295,13 +323,13 @@ html, body {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 999; /* stay on top */
-    background-color: #212529; /* match your navbar-dark bg-dark */
+    z-index: 999; 
+    background-color: #212529; 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 body {
-    padding-top: 70px; /* adjust based on your navbar height */
+    padding-top: 70px; 
 }
 
 .sticky-navbar {
@@ -336,28 +364,23 @@ body {
   transform: scale(1.02);
 }
 
-/* Sell Form */
 form#sellForm {
   max-width: 600px;
   margin: 0 auto;
 }
 
-/* Label styling for consistency */
 form#sellForm label {
   font-weight: 500;
 }
 
-/* Button spacing */
 #sellForm .btn {
   margin-top: 10px;
 }
 
-/* Text center and spacing for dashboard */
 .text-center.text-primary {
   margin-bottom: 30px;
 }
 
-/* Dashboard item cards spacing */
 #itemsList .card {
   height: 100%;
 }
@@ -405,4 +428,13 @@ form#sellForm label {
   margin: 0 auto 15px auto;
 }
 
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+}
 
+.carousel-item .col-md-4 {
+    display: flex;
+    justify-content: center;
+}
