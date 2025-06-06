@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Orders - E-Shop</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Navigation -->
+  <div id="navigation-container"></div>
+  <script src="navigation.js"></script>
+
+  <div class="container my-5">
+    <h1 class="mb-4 text-center">My Orders</h1>
+
+    <div id="orders-container">
+      <div class="alert alert-info">Loading your orders...</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
+  <script src="footer.js"></script>
+
+  <script>
+    async function fetchOrders() {
+  const user = JSON.parse(sessionStorage.getItem('user'));
+  const container = document.getElementById('orders-container');
+
+  if (!user || !user.id) {
+    container.innerHTML = '<div class="alert alert-warning">You must be logged in to view your orders.</div>';
+    return;
+  }
+
+  try {
+    const response = await fetch(`get_orders.php?buyer_id=${user.id}`);
+    const text = await response.text(); // ⬅️ DEBUG: get raw text
+    console.log("🔍 Raw response from get_orders.php:", text);
+
+    const data = JSON.parse(text); // ⬅️ Attempt parsing AFTER logging
+
+    if (!Array.isArray(data) || data.length === 0) {
+      container.innerHTML = '<div class="alert alert-info">You have no past orders.</div>';
+      return;
+    }
+
+    let html = '';
+    data.forEach(order => {
+      html += `
+        <div class="card mb-4">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <strong>Order #${order.order_id}</strong>
+            <div class="text-end">
+  <small class="text-muted">Placed on ${order.order_date}</small><br>
+  <span class="badge ${getStatusBadge(order.status)}">${order.status || 'Pending'}</span>
+</div>
+          </div>
+          <div class="card-body">
+            ${order.items.map(item => `
+              <div class="d-flex justify-content-between border-bottom py-2">
+                <div>
+                  <strong>${item.title}</strong><br />
+                  Quantity: ${item.quantity}
+                </div>
+                <div class="text-end">
+                  R${(item.price * item.quantity).toFixed(2)}
+                </div>
+              </div>
+            `).join('')}
+            <div class="d-flex justify-content-end mt-3">
+              <strong>Total: R${parseFloat(order.total_amount).toFixed(2)}</strong>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    container.innerHTML = html;
+  } catch (error) {
+    console.error("❌ Failed to parse or fetch orders:", error);
+    container.innerHTML = '<div class="alert alert-danger">Failed to load orders. Please try again later.</div>';
+  }
+}
+
+function getStatusBadge(status) {
+  switch ((status || '').toLowerCase()) {
+    case 'completed': return 'bg-success';
+    case 'processing': return 'bg-warning text-dark';
+    case 'cancelled': return 'bg-danger';
+    case 'shipped': return 'bg-primary';
+    default: return 'bg-secondary';
+  }
+}
+    document.addEventListener('DOMContentLoaded', fetchOrders);
+  </script>
+</body>
+</html>

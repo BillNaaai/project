@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <li id="logoutOption" style="display: none;"><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
                             <li><hr class="dropdown-divider" id="accountDivider"></li>
                             <li id="profileOption"><a class="dropdown-item" href="profile.html">My Profile</a></li>
-                            <li id="ordersOption"><a class="dropdown-item" href="orders.html">My Orders</a></li>
+                            <li id="ordersOption"><a class="dropdown-item" href="myorders.html">My Orders</a></li>
                             <li id="dashboardOption"><a class="dropdown-item" href="sellerdashboard.html">Seller Dashboard</a></li>
                         </ul>
                     </li>

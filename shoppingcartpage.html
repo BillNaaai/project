@@ -1,86 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart - E-Shop</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shopping Cart - E-Shop</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <!-- Navigation -->
-<div id="navigation-container"></div>
+  <div id="navigation-container"></div>
+  <script src="navigation.js"></script>
 
-<script src="navigation.js"></script>
-
-    <!-- Notifications container -->
-    <div id="notifications"></div>
-
-    <!-- Main Content -->
-    <div class="container my-5">
-        <h1 class="mb-4">Shopping Cart</h1>
-        
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="card">
-                    <div class="card-header bg-white">
-                        <div class="row">
-                            <div class="col-md-6">Product</div>
-                            <div class="col-md-2">Price</div>
-                            <div class="col-md-2">Quantity</div>
-                            <div class="col-md-2">Total</div>
-                        </div>
-                    </div>
-                    <div class="card-body" id="cart-items">
-                        <!-- Cart items will be inserted here by JavaScript -->
-                        <div class="alert alert-info">Your cart is empty</div>
-                    </div>
-                </div>
+  <div class="container my-5">
+    <h1 class="mb-4">Shopping Cart</h1>
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-header bg-white">
+            <div class="row">
+              <div class="col-md-4">Product</div>
+              <div class="col-md-2">Price</div>
+              <div class="col-md-2">Quantity</div>
+              <div class="col-md-2">Total</div>
+              <div class="col-md-2">Action</div>
             </div>
-            
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0">Order Summary</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between mb-3">
-                            <span>Subtotal</span>
-                            <span id="cart-total">$0.00</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-3">
-                            <span>Shipping</span>
-                            <span>Free</span>
-                        </div>
-                        <hr>
-                        <div class="d-flex justify-content-between mb-3">
-                            <strong>Total</strong>
-                            <strong id="cart-final-total">$0.00</strong>
-                        </div>
-                        <button class="btn btn-primary w-100" id="checkout-btn">Proceed to Checkout</button>
-                    </div>
-                </div>
-                
-                <div class="card mt-3">
-                    <div class="card-body">
-                        <h5>Need Help?</h5>
-                        <p>Have questions or need assistance with your order?</p>
-                        <a href="contactpage.html" class="btn btn-outline-secondary w-100">Contact Us</a>
-                    </div>
-                </div>
-            </div>
+          </div>
+          <div class="card-body" id="cart-items">
+            <div class="alert alert-info">Your cart is empty</div>
+          </div>
         </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="mb-0">Order Summary</h5>
+          </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-between mb-3">
+              <span>Subtotal</span>
+              <span id="cart-total">R0.00</span>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+              <span>Shipping</span>
+              <span>Free</span>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between mb-3">
+              <strong>Total</strong>
+              <strong id="cart-final-total">R0.00</strong>
+            </div>
+            <button class="btn btn-primary w-100 mb-2" id="checkout-btn">Proceed to Checkout</button>
+            <button class="btn btn-outline-danger w-100" id="clear-cart-btn">Clear Cart</button>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- Footer -->
-    <div id="footer-container"></div>
+  <div id="footer-container"></div>
+  <script src="footer.js"></script>
 
-    <script src="footer.js"></script>
+  <script>
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    <!-- Link to client-side JavaScript -->
-    <script src="client.js"></script>
+    function renderCart() {
+      const container = document.getElementById('cart-items');
+      container.innerHTML = '';
+      let total = 0;
+
+      if (cart.length === 0) {
+        container.innerHTML = '<div class="alert alert-info">Your cart is empty</div>';
+        document.getElementById('cart-total').textContent = 'R0.00';
+        document.getElementById('cart-final-total').textContent = 'R0.00';
+        return;
+      }
+
+      cart.forEach((item, index) => {
+        const price = parseFloat(item.price) || 0;
+        const quantity = parseInt(item.quantity) || 1;
+        const subtotal = price * quantity;
+        total += subtotal;
+
+        const row = document.createElement('div');
+        row.classList.add('row', 'align-items-center', 'mb-3');
+        row.innerHTML = `
+          <div class="col-md-4"><strong>${item.title}</strong></div>
+          <div class="col-md-2">R${price.toFixed(2)}</div>
+          <div class="col-md-2">${quantity}</div>
+          <div class="col-md-2">R${subtotal.toFixed(2)}</div>
+          <div class="col-md-2 text-end">
+            <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${index})">
+              Remove
+            </button>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+
+      document.getElementById('cart-total').textContent = `R${total.toFixed(2)}`;
+      document.getElementById('cart-final-total').textContent = `R${total.toFixed(2)}`;
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+    }
+
+    function checkout() {
+      const user = JSON.parse(sessionStorage.getItem('user'));
+      if (!user || !user.id) {
+        alert("You must be logged in to place an order.");
+        window.location.href = "loginpage.html";
+        return;
+      }
+
+      const payload = {
+        buyer_id: user.id,
+        items: cart,
+        total_amount: cart.reduce((acc, item) => acc + (parseFloat(item.price) * (item.quantity || 1)), 0)
+      };
+
+      fetch('place_order.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert('Order placed successfully!');
+          localStorage.removeItem('cart');
+          cart = [];
+          renderCart();
+          window.location.href = "myorders.html";
+        } else {
+          alert('Order failed: ' + (data.error || 'Unknown error'));
+        }
+      })
+      .catch(err => {
+        console.error("Checkout failed:", err);
+        alert('Something went wrong during checkout.');
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCart();
+
+      document.getElementById('checkout-btn').addEventListener('click', checkout);
+
+      document.getElementById('clear-cart-btn').addEventListener('click', () => {
+        if (confirm("Are you sure you want to clear your cart?")) {
+          localStorage.removeItem('cart');
+          location.reload();
+        }
+      });
+    });
+  </script>
 </body>
 </html>
