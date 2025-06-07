@@ -5,7 +5,6 @@ error_reporting(E_ALL);
 header('Content-Type: application/json');
 require_once 'db.php';
 
-// Validate item ID from query string
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     echo json_encode(['error' => 'Invalid item ID']);
     exit;
@@ -13,7 +12,6 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 
 $item_id = intval($_GET['id']);
 
-// Fetch item and seller info
 $query = "
     SELECT 
         items.id, 
