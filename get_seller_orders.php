@@ -1,45 +1,44 @@
 <?php
-require 'db.php';
 header('Content-Type: application/json');
+require 'db.php';
 
-$seller_id = $_POST['seller_id'] ?? null;
+session_start();
+$seller_id = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : (isset($_GET['seller_id']) ? intval($_GET['seller_id']) : 0);
 
-if (!$seller_id) {
-    echo json_encode(["error" => "Seller ID missing"]);
+if ($seller_id <= 0) {
+    echo json_encode(["error" => "Invalid seller ID."]);
     exit;
 }
 
 $sql = "
     SELECT 
-        oi.order_item_id,
-        oi.order_id,
-        oi.item_id,
-        oi.quantity,
-        oi.price,
-        oi.status,
-        i.title,
-        i.image_url,
-        u.first_name,
-        u.last_name
-    FROM order_items oi
-    JOIN items i ON oi.item_id = i.id
-    JOIN orders o ON oi.order_id = o.id
-    JOIN users u ON o.buyer_id = u.id
-    WHERE oi.seller_id = ?
-    ORDER BY o.created_at DESC
+  o.order_id,
+  oi.item_id, -- ✅ include this
+  oi.quantity,
+  oi.price,
+  oi.status,
+  o.created_at,
+  i.title AS item_title,
+  i.image_url,
+  u.first_name,
+  u.last_name,
+  u.email
+FROM orders o
+JOIN order_items oi ON o.order_id = oi.order_id
+JOIN items i ON oi.item_id = i.id
+JOIN users u ON o.buyer_id = u.id
+WHERE oi.seller_id = ?
+ORDER BY o.created_at DESC
 ";
 
-$stmt = $con->prepare($sql);
+$stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $seller_id);
 $stmt->execute();
-
 $result = $stmt->get_result();
-$orders = [];
 
+$orders = [];
 while ($row = $result->fetch_assoc()) {
     $orders[] = $row;
 }
 
 echo json_encode($orders);
-$stmt->close();
-?>

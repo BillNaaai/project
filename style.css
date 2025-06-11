@@ -438,3 +438,11 @@ form#sellForm label {
     display: flex;
     justify-content: center;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+.navbar {
+  margin-bottom: 20px;
+}

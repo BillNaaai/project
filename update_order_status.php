@@ -1,22 +1,33 @@
 <?php
-require 'db_connection.php';
-session_start();
+header('Content-Type: application/json');
+require 'db.php';
 
-if (!isset($_SESSION['user'])) {
-    echo json_encode(['error' => 'Not logged in']);
+$data = json_decode(file_get_contents("php://input"), true);
+
+if (!isset($data['order_id'], $data['item_id'], $data['status'])) {
+    echo json_encode(["success" => false, "message" => "Missing fields"]);
     exit;
 }
 
-$order_id = $_POST['order_id'];
-$new_status = $_POST['status'];
+$order_id = (int) $data['order_id'];
+$item_id = (int) $data['item_id'];
+$status = trim($data['status']);
 
-$sql = "UPDATE orders SET status = ? WHERE id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("si", $new_status, $order_id);
+$allowed = ['Pending', 'Shipped', 'Completed', 'Cancelled'];
+if (!in_array($status, $allowed)) {
+    echo json_encode(["success" => false, "message" => "Invalid status"]);
+    exit;
+}
+
+$stmt = $conn->prepare("UPDATE order_items SET status = ? WHERE order_id = ? AND item_id = ?");
+$stmt->bind_param("sii", $status, $order_id, $item_id);
 
 if ($stmt->execute()) {
-    echo json_encode(['success' => true]);
+    echo json_encode(["success" => true]);
 } else {
-    echo json_encode(['error' => 'Failed to update order status']);
+    echo json_encode(["success" => false, "message" => "Update failed"]);
 }
+
+$stmt->close();
+$conn->close();
 ?>

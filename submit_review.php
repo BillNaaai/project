@@ -1,49 +1,56 @@
 <?php
-require 'db.php';
 header('Content-Type: application/json');
+require 'db.php'; // Make sure this defines $conn (MySQLi)
 
+// Get JSON input
 $data = json_decode(file_get_contents("php://input"), true);
 
-$user_id = intval($data['user_id']);
-$item_id = intval($data['item_id']);
-$rating = intval($data['rating']);
-$comment = trim($data['comment'] ?? '');
-
-// Check: did user order this item?
-$orderCheck = $conn->prepare("
-  SELECT oi.id 
-  FROM orders o 
-  JOIN order_items oi ON o.id = oi.order_id 
-  WHERE o.user_id = ? AND oi.item_id = ?
-");
-$orderCheck->bind_param("ii", $user_id, $item_id);
-$orderCheck->execute();
-$orderCheck->store_result();
-
-if ($orderCheck->num_rows === 0) {
-    echo json_encode(["success" => false, "error" => "You must purchase this item before reviewing."]);
+// Basic validation
+if (!$data || !isset($data['item_id'], $data['user_id'], $data['rating'], $data['comment'])) {
+    echo json_encode(["success" => false, "message" => "Missing required fields."]);
     exit;
 }
 
-// Check: is user the seller?
-$sellerCheck = $conn->prepare("SELECT user_id FROM items WHERE id = ?");
-$sellerCheck->bind_param("i", $item_id);
-$sellerCheck->execute();
-$sellerCheck->bind_result($seller_id);
-$sellerCheck->fetch();
+$item_id = (int) $data['item_id'];
+$user_id = (int) $data['user_id'];
+$rating = (int) $data['rating'];
+$comment = trim($data['comment']);
 
-if ($seller_id == $user_id) {
-    echo json_encode(["success" => false, "error" => "Sellers cannot review their own items."]);
+// Optional rating range validation
+if ($rating < 1 || $rating > 5) {
+    echo json_encode(["success" => false, "message" => "Rating must be between 1 and 5."]);
     exit;
 }
 
-// Save review
-$stmt = $conn->prepare("INSERT INTO reviews (user_id, item_id, rating, comment) VALUES (?, ?, ?, ?)");
-$stmt->bind_param("iiis", $user_id, $item_id, $rating, $comment);
+// ✅ Step 1: Check for existing review
+$check = $conn->prepare("SELECT id FROM reviews WHERE user_id = ? AND item_id = ?");
+$check->bind_param("ii", $user_id, $item_id);
+$check->execute();
+$check->store_result();
+
+if ($check->num_rows > 0) {
+    echo json_encode(["success" => false, "message" => "You have already reviewed this item."]);
+    $check->close();
+    exit;
+}
+$check->close();
+
+// ✅ Step 2: Insert new review
+$stmt = $conn->prepare("INSERT INTO reviews (item_id, user_id, rating, comment, created_at) VALUES (?, ?, ?, ?, NOW())");
+
+if (!$stmt) {
+    echo json_encode(["success" => false, "message" => "Prepare failed: " . $conn->error]);
+    exit;
+}
+
+$stmt->bind_param("iiis", $item_id, $user_id, $rating, $comment);
 
 if ($stmt->execute()) {
     echo json_encode(["success" => true]);
 } else {
-    echo json_encode(["success" => false, "error" => "Failed to submit review."]);
+    echo json_encode(["success" => false, "message" => "Execute failed: " . $stmt->error]);
 }
+
+$stmt->close();
+$conn->close();
 ?>

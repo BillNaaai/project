@@ -11,61 +11,58 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Navigation -->
+<!-- Navigation -->
 <div id="navigation-container"></div>
-
 <script src="navigation.js"></script>
 
-    <!-- Main Content -->
-    <div class="container my-5">
-        <div class="login-container">
-            <h1 class="text-center mb-4">Login to Your Account</h1>
-            
-            <div class="card login-card">
-                <div class="card-body p-4">
-                    <form id="loginForm" method="post">
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" required>
-                        </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="rememberMe">
-                            <label class="form-check-label" for="rememberMe">Remember me</label>
-                            <a href="forgotpassword.html" class="float-end forgot-password">Forgot password?</a>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100 py-2">Login</button>
-                        
-                        <div class="social-login">
-                            <p class="text-center mb-3">Or login with</p>
-                            <button type="button" class="btn btn-outline-dark social-btn">
-                                <i class="bi-google me-2"></i> Google
-                            </button>
-                            <button type="button" class="btn btn-outline-primary social-btn">
-                                <i class="bi-facebook me-2"></i> Facebook
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            
-            <div class="text-center mt-4">
-                <p>Don't have an account? <a href="registerpage.html">Sign up</a></p>
+<!-- Main Content -->
+<div class="container my-5">
+    <div class="login-container">
+        <h1 class="text-center mb-4">Login to Your Account</h1>
+
+        <div class="card login-card">
+            <div class="card-body p-4">
+                <form id="loginForm" method="post">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" required>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe">Remember me</label>
+                        <a href="forgotpassword.html" class="float-end forgot-password">Forgot password?</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 py-2">Login</button>
+
+                    <div class="social-login mt-3">
+                        <p class="text-center mb-3">Or login with</p>
+                        <button type="button" class="btn btn-outline-dark social-btn w-100 mb-2">
+                            <i class="bi-google me-2"></i> Google
+                        </button>
+                        <button type="button" class="btn btn-outline-primary social-btn w-100">
+                            <i class="bi-facebook me-2"></i> Facebook
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
+        <div class="text-center mt-4">
+            <p>Don't have an account? <a href="registerpage.html">Sign up</a></p>
+        </div>
     </div>
+</div>
 
-     <!-- Footer -->
-     <div id="footer-container"></div>
+<!-- Footer -->
+<div id="footer-container"></div>
+<script src="footer.js"></script>
 
-     <script src="footer.js"></script>
-    
-     <script>
-       $(document).ready(function() {
-    $('#loginForm').submit(function(e) {
+<script>
+$(document).ready(function () {
+    $('#loginForm').submit(function (e) {
         e.preventDefault();
 
         const loginData = {
@@ -73,16 +70,12 @@
             password: $('#password').val()
         };
 
-        console.log("Sending login data:", loginData);
-
         $.ajax({
             url: 'http://localhost/project/login.php',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(loginData),
-            success: function(response) {
-                console.log("🔹 Raw Server Response:", response);
-
+            success: function (response) {
                 if (typeof response === "string") {
                     try {
                         response = JSON.parse(response);
@@ -93,33 +86,27 @@
                     }
                 }
 
-                console.log("🔹 Parsed Response:", response);
-                console.log("🔹 Message:", response.message);
-                console.log("🔹 User Data:", response.user);
-
-                // ✅ Check if the response contains valid user data
-                if (response.message === "Login successful") {
-                    if (!response.user) {
-                        console.error("❌ ERROR: No user data in response!");
-                        alert("Login failed: No user data received.");
-                        return;
-                    }
-
-                    sessionStorage.setItem("user", JSON.stringify(response.user));
-                    console.log("✅ User stored in sessionStorage:", sessionStorage.getItem("user"));
-                    window.location.href = "index.html";
-                } else {
-                    alert(response.error || "Invalid login credentials.");
+                if (response.is_admin === true && response.admin) {
+                    sessionStorage.setItem("admin", JSON.stringify(response.admin));
+                    window.location.href = "admin_dashboard.html";
+                    return;
                 }
+
+                if (response.message === "Login successful" && response.user) {
+                    sessionStorage.setItem("user", JSON.stringify(response.user));
+                    window.location.href = "index.html"; 
+                    return;
+                }
+
+                alert(response.error || "Invalid login credentials.");
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error("❌ AJAX Error:", status, error);
-                console.error("❌ Full Response:", xhr.responseText);
                 alert(xhr.responseJSON?.error || "Login failed.");
             }
         });
     });
 });
-    </script>
+</script>
 </body>
 </html>

@@ -73,59 +73,67 @@
       }
     }
 
-    async function showReviewFormIfEligible(item) {
-      const reviewForm = document.getElementById("reviewForm");
-      const userData = sessionStorage.getItem("user");
-      if (!userData) return;
+    function showReviewFormAlways() {
+    const userData = sessionStorage.getItem("user");
+    const showBtn = document.getElementById("showReviewBtn");
 
-      const user = JSON.parse(userData);
-      if (user.id === item.user_id) return;
+    if (!userData || !showBtn) return;
 
-      try {
-        const res = await fetch(`check_review_eligibility.php?user_id=${user.id}&item_id=${item.id}`);
-        const data = await res.json();
-        if (data.eligible) {
-          reviewForm.style.display = "block";
-        }
-      } catch (error) {
-        console.error("Failed to check review eligibility:", error);
-      }
-    }
+    showBtn.style.display = "inline-block";
+    showBtn.onclick = () => {
+      document.getElementById("reviewForm").style.display = "block";
+      showBtn.style.display = "none";
+    };
+  }
 
     async function submitReview() {
-      const rating = document.getElementById("reviewRating").value;
-      const comment = document.getElementById("reviewComment").value;
-      const itemId = getItemIdFromURL();
-      const userData = sessionStorage.getItem("user");
+    const rating = document.getElementById("reviewRating").value;
+    const comment = document.getElementById("reviewComment").value;
+    const itemId = getItemIdFromURL();
+    const userData = sessionStorage.getItem("user");
 
-      if (!rating || !comment || !userData) return alert("Please fill all fields.");
-
-      const user = JSON.parse(userData);
-
-      try {
-        const res = await fetch("submit_review.php", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            item_id: itemId,
-            user_id: user.id,
-            rating,
-            comment
-          })
-        });
-
-        const result = await res.json();
-        if (result.success) {
-          alert("Review submitted!");
-          document.getElementById("reviewForm").reset();
-          loadReviews(itemId);
-        } else {
-          alert(result.message || "Review submission failed.");
-        }
-      } catch (error) {
-        console.error("Submit review failed:", error);
-      }
+    if (!rating || !comment || !userData) {
+      alert("Please fill all fields.");
+      return;
     }
+
+    const user = JSON.parse(userData);
+
+    try {
+      const res = await fetch("submit_review.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          item_id: itemId,
+          user_id: user.id,
+          rating,
+          comment
+        })
+      });
+
+      const text = await res.text();
+      let result;
+      try {
+        result = JSON.parse(text);
+      } catch (err) {
+        console.error("Submit review failed:", err, text);
+        alert("Something went wrong.");
+        return;
+      }
+      if (result.success) {
+        alert("Review submitted!");
+        document.getElementById("reviewForm").style.display = "none";
+        document.getElementById("showReviewBtn").style.display = "inline-block";
+        loadReviews(itemId);
+      } else {
+        alert(result.message || "Review submission failed.");
+      }
+    } catch (error) {
+      console.error("Submit review failed:", error);
+      alert("Something went wrong.");
+    }
+  }
+
 
     async function loadItemDetails() {
       const itemId = getItemIdFromURL();
@@ -160,7 +168,8 @@
             <p><strong>Contact:</strong> <a href="mailto:${item.email}">${item.email}</a></p>
 
             <button class="btn btn-primary mt-3" onclick='addToCart(${JSON.stringify(item)})'>Add to Cart</button>
-            <button class="btn btn-danger mt-3" data-bs-toggle="modal" data-bs-target="#reportModal">Report Item</button>
+            <a href="mailto:${item.email}?subject=Help regarding your item '${item.title}'" class="btn btn-warning mt-3 ms-2">Help</a>
+            <button class="btn btn-danger mt-3 ms-2" data-bs-toggle="modal" data-bs-target="#reportModal">Report Item</button>
 
             <div class="modal fade" id="reportModal" tabindex="-1">
               <div class="modal-dialog">
@@ -181,19 +190,22 @@
 
             <hr />
             <h4>Customer Reviews</h4>
+            <button id="showReviewBtn" class="btn btn-outline-primary btn-sm mb-3" style="display:none;">Leave a Review</button>
             <div id="reviewSection">
               <div id="reviewList" class="mb-3"></div>
               <div id="reviewForm" style="display: none;">
                 <label for="reviewRating" class="form-label">Your Rating (1–5):</label>
                 <input type="number" class="form-control mb-2" id="reviewRating" min="1" max="5" required>
                 <textarea class="form-control mb-2" id="reviewComment" placeholder="Write a review..." rows="3"></textarea>
-                <button class="btn btn-primary btn-sm" onclick="submitReview()">Submit Review</button>
+                <div class="d-flex gap-2">
+                  <button type="button" class="btn btn-primary btn-sm" onclick="submitReview()">Submit Review</button>
+                  <button type="button" class="btn btn-secondary btn-sm" onclick="cancelReview()">Cancel</button>
+                </div>
               </div>
             </div>
           </div>
         `;
 
-        // ✅ ATTACH reportForm SUBMIT listener here (after modal is inserted)
         document.getElementById("reportForm").addEventListener("submit", async function (e) {
           e.preventDefault();
           const issue = document.getElementById("reportIssue").value;
@@ -226,7 +238,7 @@
         });
 
         loadReviews(item.id);
-        showReviewFormIfEligible(item);
+        showReviewFormAlways();
 
       } catch (error) {
         console.error(error);
@@ -234,7 +246,24 @@
       }
     }
 
-    document.addEventListener("DOMContentLoaded", loadItemDetails);
+    document.addEventListener("DOMContentLoaded", () => {
+    loadItemDetails();
+
+    const reviewForm = document.getElementById("reviewForm");
+    if (reviewForm) {
+      reviewForm.addEventListener("submit", function (e) {
+        e.preventDefault(); // prevent page reload
+        submitReview();
+      });
+    }
+  });
+
+    function cancelReview() {
+    document.getElementById("reviewForm").style.display = "none";
+    document.getElementById("reviewRating").value = "";
+    document.getElementById("reviewComment").value = "";
+    document.getElementById("showReviewBtn").style.display = "inline-block";
+  }
   </script>
 </body>
 </html>
