@@ -106,10 +106,11 @@
     }
 
     function removeFromCart(index) {
-      cart.splice(index, 1);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      renderCart();
-    }
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.splice(index, 1);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  location.reload(); // ✅ This reloads the page immediately
+}
 
     function checkout() {
       const user = JSON.parse(sessionStorage.getItem('user'));

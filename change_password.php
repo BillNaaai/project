@@ -1,33 +1,76 @@
 <?php
-header("Content-Type: application/json");
-require_once 'db.php';
-
-session_start();
+header('Content-Type: application/json');
+require_once 'db.php'; // assumes you already have a db connection script
 
 $data = json_decode(file_get_contents("php://input"), true);
 
 // Validate input
-if (!isset($_SESSION['user']['id'])) {
-    http_response_code(401);
-    echo json_encode(["error" => "Not logged in"]);
+if (!isset($data['user_id'])) {
+    echo json_encode(["success" => false, "error" => "User ID is required."]);
     exit;
 }
 
-if (!isset($data['password']) || strlen($data['password']) < 8) {
-    http_response_code(400);
-    echo json_encode(["error" => "Password must be at least 8 characters"]);
+$user_id = intval($data['user_id']);
+$first_name = isset($data['first_name']) ? trim($data['first_name']) : null;
+$last_name = isset($data['last_name']) ? trim($data['last_name']) : null;
+$email = isset($data['email']) ? trim($data['email']) : null;
+$password = isset($data['password']) ? $data['password'] : null;
+
+// Prepare SQL dynamically
+$fields = [];
+$params = [];
+$types = '';
+
+if ($first_name !== null && $first_name !== '') {
+    $fields[] = "first_name = ?";
+    $params[] = $first_name;
+    $types .= 's';
+}
+
+if ($last_name !== null && $last_name !== '') {
+    $fields[] = "last_name = ?";
+    $params[] = $last_name;
+    $types .= 's';
+}
+
+if ($email !== null && $email !== '') {
+    $fields[] = "email = ?";
+    $params[] = $email;
+    $types .= 's';
+}
+
+if ($password !== null && $password !== '') {
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $fields[] = "password_hash = ?";
+    $params[] = $hashed_password;
+    $types .= 's';
+}
+
+if (empty($fields)) {
+    echo json_encode(["success" => false, "error" => "No valid fields to update."]);
     exit;
 }
 
-$userId = $_SESSION['user']['id'];
-$passwordHash = password_hash($data['password'], PASSWORD_DEFAULT);
+// Add user ID for WHERE clause
+$params[] = $user_id;
+$types .= 'i';
 
-try {
-    $stmt = $conn->prepare("UPDATE users SET password_hash = ? WHERE id = ?");
-    $stmt->execute([$passwordHash, $userId]);
+$sql = "UPDATE users SET " . implode(", ", $fields) . " WHERE id = ?";
 
-    echo json_encode(["success" => true, "message" => "Password updated successfully"]);
-} catch (PDOException $e) {
-    http_response_code(500);
-    echo json_encode(["error" => "Database error: " . $e->getMessage()]);
+$stmt = $conn->prepare($sql);
+if (!$stmt) {
+    echo json_encode(["success" => false, "error" => "SQL prepare failed: " . $conn->error]);
+    exit;
 }
+
+$stmt->bind_param($types, ...$params);
+
+if ($stmt->execute()) {
+    echo json_encode(["success" => true]);
+} else {
+    echo json_encode(["success" => false, "error" => "Update failed: " . $stmt->error]);
+}
+
+$stmt->close();
+$conn->close();
+?>

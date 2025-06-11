@@ -13,12 +13,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     <li class="nav-item"><a class="nav-link" href="contactpage.html">Contact</a></li>
                 </ul>
                 <span id="userGreeting" style="display: none; color: white; font-weight: bold; margin-right: 15px;"></span>
-                <form class="d-flex me-2" id="searchBarContainer">
-                    <input class="form-control me-2" type="search" placeholder="Search products">
+                <form id="searchForm" class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" id="searchInput" placeholder="Search products" aria-label="Search">
                     <button class="btn btn-outline-light" type="submit">Search</button>
                 </form>
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="shoppingcartpage.html"><i class="bi-cart"></i> Cart (0)</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="shoppingcartpage.html">
+                            <i class="bi-cart"></i> Cart (<span id="cartCount">0</span>)
+                        </a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi-person"></i> Account
@@ -88,7 +92,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     window.location.href = "index.html";
                 });
             }
-
         } else {
             if (loginOption) loginOption.style.display = "block";
             if (registerOption) registerOption.style.display = "block";
@@ -101,5 +104,30 @@ document.addEventListener("DOMContentLoaded", function () {
             if (accountDivider) accountDivider.style.display = "none";
         }
 
+        // 🔍 Search functionality
+        const searchForm = document.getElementById("searchForm");
+        const searchInput = document.getElementById("searchInput");
+
+        if (searchForm && searchInput) {
+            searchForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+                const keyword = searchInput.value.trim();
+                if (keyword.length > 0) {
+                    window.location.href = `productspage.html?search=${encodeURIComponent(keyword)}`;
+                }
+            });
+        }
+
+        // 🛒 Cart Count functionality
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            document.getElementById("cartCount").textContent = cart.length;
+        }
+
+        updateCartCount();
+
+        window.addEventListener("storage", function (e) {
+            if (e.key === "cart") updateCartCount();
+        });
     }, 100);
 });

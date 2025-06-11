@@ -8,9 +8,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" />
   <link rel="stylesheet" href="style.css" />
-  <style>
-    
-  </style>
 </head>
 <body>
   <!-- Navigation -->
@@ -75,7 +72,7 @@
         <div class="col-md-3 mb-4">
           <div class="card h-100">
             <img src="${item.image_url || 'images/placeholder.jpg'}" class="card-img-top" alt="${item.title}">
-            <div class="card-body">
+            <div class="card-body text-center">
               <h5 class="card-title">${item.title}</h5>
               <p class="fw-bold">R${parseFloat(item.price).toFixed(2)}</p>
               <a href="viewitempage.html?id=${item.id}" class="btn btn-outline-secondary w-100">View Item</a>
@@ -95,8 +92,11 @@
         carousel.innerHTML = '';
         grid.innerHTML = '';
 
-        // Carousel: group items into slides of 3
-        const chunkedSlides = data.slice(0, 10).reduce((chunks, item, index) => {
+        const carouselItems = data.slice(0, 6);     // 2 slides (3 items each)
+        const featuredItems = data.slice(6, 14);    // 8 items
+
+        // Carousel: group into slides of 3
+        const chunkedSlides = carouselItems.reduce((chunks, item, index) => {
           const chunkIndex = Math.floor(index / 3);
           if (!chunks[chunkIndex]) chunks[chunkIndex] = [];
           chunks[chunkIndex].push(item);
@@ -107,8 +107,8 @@
           carousel.innerHTML += createCarouselSlide(chunk, index === 0);
         });
 
-        // Product Grid: first 8 items
-        data.slice(0, 8).forEach(item => {
+        // Featured Products Grid
+        featuredItems.forEach(item => {
           grid.innerHTML += createGridItem(item);
         });
 

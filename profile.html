@@ -34,24 +34,55 @@
 
     <hr />
 
-    <h2>Update Info</h2>
-    <div class="profile-update">
-      <label for="addressInput">Address:</label>
-      <input type="text" id="addressInput" placeholder="Enter new address" />
+    <h2 class="mb-3">Update Info</h2>
+<form id="infoForm" class="mb-5">
+  <div class="mb-3">
+    <label for="address" class="form-label">Address:</label>
+    <input type="text" class="form-control" id="address" placeholder="Enter new address">
+  </div>
 
-      <label for="phoneInput">Phone Number:</label>
-      <input type="text" id="phoneInput" placeholder="Enter new phone number" />
+  <div class="mb-3">
+    <label for="phone" class="form-label">Phone Number:</label>
+    <input type="text" class="form-control" id="phone" placeholder="Enter new phone number">
+  </div>
 
-      <label for="businessInput">Business Name:</label>
-      <input type="text" id="businessInput" placeholder="Enter new business name" />
+  <div class="mb-3">
+    <label for="business_name" class="form-label">Business Name:</label>
+    <input type="text" class="form-control" id="business_name" placeholder="Enter new business name">
+  </div>
 
-      <button id="updateBtn">Update Info</button>
-    </div>
+  <button type="submit" class="btn btn-outline-primary">Update Info</button>
+</form>
 
-    <div class="profile-actions">
-      <button id="faqBtn" onclick="location.href='faqpage.html'">FAQ</button>
-      <button id="logoutBtn2">Logout</button>
-    </div>
+<h2>Account Settings</h2>
+<form id="accountForm" class="mb-4">
+  <div class="mb-3">
+    <label for="firstName" class="form-label">First Name</label>
+    <input type="text" class="form-control" id="firstName" placeholder="Enter new first name">
+  </div>
+
+  <div class="mb-3">
+    <label for="lastName" class="form-label">Last Name</label>
+    <input type="text" class="form-control" id="lastName" placeholder="Enter new last name">
+  </div>
+
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input type="email" class="form-control" id="email" placeholder="Enter new email">
+  </div>
+
+  <div class="mb-3">
+    <label for="newPassword" class="form-label">New Password</label>
+    <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
+  </div>
+
+  <div class="mb-3">
+    <label for="confirmPassword" class="form-label">Confirm New Password</label>
+    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password">
+  </div>
+
+  <button type="submit" class="btn btn-outline-primary">Update Account</button>
+</form>
   </main>
 
   <!-- Footer -->
@@ -133,6 +164,54 @@
           });
       });
     });
+
+    document.getElementById('accountForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  const firstName = document.getElementById('firstName').value.trim();
+  const lastName = document.getElementById('lastName').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const newPassword = document.getElementById('newPassword').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
+
+  if (newPassword && newPassword !== confirmPassword) {
+    alert("Passwords do not match.");
+    return;
+  }
+
+  const user = JSON.parse(sessionStorage.getItem('user'));
+  if (!user || !user.id) {
+    alert("You must be logged in.");
+    return;
+  }
+
+  const payload = {
+    user_id: user.id,
+    first_name: firstName,
+    last_name: lastName,
+    email: email,
+    password: newPassword
+  };
+
+  fetch('change_password.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        alert("Account info updated successfully.");
+        location.reload();
+      } else {
+        alert(data.error || "Update failed.");
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Error updating account.");
+    });
+});
   </script>
 </body>
 </html>

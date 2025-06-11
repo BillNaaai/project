@@ -21,6 +21,7 @@
 
   <div id="footer-container"></div>
   <script src="footer.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
     function getItemIdFromURL() {
@@ -39,6 +40,91 @@
       });
       localStorage.setItem('cart', JSON.stringify(cart));
       alert("Item added to cart!");
+      location.reload();
+    }
+
+    function renderReviews(reviews) {
+      const reviewList = document.getElementById("reviewList");
+      reviewList.innerHTML = '';
+
+      if (!reviews || reviews.length === 0) {
+        reviewList.innerHTML = '<p class="text-muted">This item has no reviews.</p>';
+        return;
+      }
+
+      reviews.forEach(review => {
+        reviewList.innerHTML += `
+          <div class="border rounded p-2 mb-2">
+            <strong>${review.first_name} ${review.last_name}</strong> 
+            <span class="text-warning">(${review.rating}/5 ⭐)</span><br>
+            <p>${review.comment}</p>
+          </div>
+        `;
+      });
+    }
+
+    async function loadReviews(itemId) {
+      try {
+        const res = await fetch(`get_reviews.php?item_id=${itemId}`);
+        const data = await res.json();
+        renderReviews(data);
+      } catch (error) {
+        console.error("Failed to load reviews:", error);
+      }
+    }
+
+    async function showReviewFormIfEligible(item) {
+      const reviewForm = document.getElementById("reviewForm");
+      const userData = sessionStorage.getItem("user");
+      if (!userData) return;
+
+      const user = JSON.parse(userData);
+      if (user.id === item.user_id) return;
+
+      try {
+        const res = await fetch(`check_review_eligibility.php?user_id=${user.id}&item_id=${item.id}`);
+        const data = await res.json();
+        if (data.eligible) {
+          reviewForm.style.display = "block";
+        }
+      } catch (error) {
+        console.error("Failed to check review eligibility:", error);
+      }
+    }
+
+    async function submitReview() {
+      const rating = document.getElementById("reviewRating").value;
+      const comment = document.getElementById("reviewComment").value;
+      const itemId = getItemIdFromURL();
+      const userData = sessionStorage.getItem("user");
+
+      if (!rating || !comment || !userData) return alert("Please fill all fields.");
+
+      const user = JSON.parse(userData);
+
+      try {
+        const res = await fetch("submit_review.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            item_id: itemId,
+            user_id: user.id,
+            rating,
+            comment
+          })
+        });
+
+        const result = await res.json();
+        if (result.success) {
+          alert("Review submitted!");
+          document.getElementById("reviewForm").reset();
+          loadReviews(itemId);
+        } else {
+          alert(result.message || "Review submission failed.");
+        }
+      } catch (error) {
+        console.error("Submit review failed:", error);
+      }
     }
 
     async function loadItemDetails() {
@@ -74,8 +160,74 @@
             <p><strong>Contact:</strong> <a href="mailto:${item.email}">${item.email}</a></p>
 
             <button class="btn btn-primary mt-3" onclick='addToCart(${JSON.stringify(item)})'>Add to Cart</button>
+            <button class="btn btn-danger mt-3" data-bs-toggle="modal" data-bs-target="#reportModal">Report Item</button>
+
+            <div class="modal fade" id="reportModal" tabindex="-1">
+              <div class="modal-dialog">
+                <form id="reportForm" class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Report Item</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                  </div>
+                  <div class="modal-body">
+                    <textarea id="reportIssue" class="form-control" placeholder="Describe the issue..." required></textarea>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Submit Report</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <hr />
+            <h4>Customer Reviews</h4>
+            <div id="reviewSection">
+              <div id="reviewList" class="mb-3"></div>
+              <div id="reviewForm" style="display: none;">
+                <label for="reviewRating" class="form-label">Your Rating (1–5):</label>
+                <input type="number" class="form-control mb-2" id="reviewRating" min="1" max="5" required>
+                <textarea class="form-control mb-2" id="reviewComment" placeholder="Write a review..." rows="3"></textarea>
+                <button class="btn btn-primary btn-sm" onclick="submitReview()">Submit Review</button>
+              </div>
+            </div>
           </div>
         `;
+
+        // ✅ ATTACH reportForm SUBMIT listener here (after modal is inserted)
+        document.getElementById("reportForm").addEventListener("submit", async function (e) {
+          e.preventDefault();
+          const issue = document.getElementById("reportIssue").value;
+          const user = JSON.parse(sessionStorage.getItem("user"));
+
+          if (!user || !user.id || !user.email) {
+            alert("You must be logged in to report an item.");
+            return;
+          }
+
+          const res = await fetch('submit_report.php', {
+            method: 'POST',
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({
+              item_id: itemId,
+              user_id: user.id,
+              user_email: user.email,
+              issue: issue
+            })
+          });
+
+          const data = await res.json();
+          if (data.success) {
+            alert("Report submitted successfully.");
+            document.getElementById("reportForm").reset();
+            bootstrap.Modal.getInstance(document.getElementById('reportModal')).hide();
+          } else {
+            alert("Failed to submit report: " + (data.error || "Unknown error."));
+          }
+        });
+
+        loadReviews(item.id);
+        showReviewFormIfEligible(item);
+
       } catch (error) {
         console.error(error);
         container.innerHTML = `<div class="alert alert-danger">Failed to load item details.</div>`;

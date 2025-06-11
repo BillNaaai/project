@@ -20,7 +20,7 @@ try {
     $pdo = new PDO($dsn, $user, $pass, $options);
 
     // Get 6 random items
-    $stmt = $pdo->query("SELECT id, title, price, image_url FROM items ORDER BY RAND() LIMIT 6");
+    $stmt = $pdo->query("SELECT id, title, price, image_url FROM items ORDER BY RAND() LIMIT 20");
     $items = $stmt->fetchAll();
 
     echo json_encode($items);
