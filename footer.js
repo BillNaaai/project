@@ -51,7 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
     </footer>
     `;
 
-    // ✅ Check if user is logged in
     const userData = sessionStorage.getItem("user");
     let user = null;
 
@@ -68,7 +67,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const registerFooter = document.getElementById("registerFooter");
 
     if (user) {
-        // ✅ Remove "Sign In" & "Register" when logged in
         signInFooter.style.display = "none";
         registerFooter.style.display = "none";
     }

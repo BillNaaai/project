@@ -1,18 +1,13 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
-require 'db.php'; // This gives us $conn (MySQLi), not $pdo
+require 'db.php'; 
 
-// Get and decode JSON input
 $data = json_decode(file_get_contents("php://input"), true);
 
-// Validate input
 if (
     !$data ||
     !isset($data["first_name"], $data["last_name"], $data["email"], $data["phone"], $data["password"])
@@ -27,11 +22,9 @@ $email = filter_var($data["email"], FILTER_SANITIZE_EMAIL);
 $phone = htmlspecialchars($data["phone"]);
 $password = $data["password"];
 
-// Hash the password before storing
 $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
 try {
-    // Check if user already exists
     $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -43,13 +36,11 @@ try {
     }
     $stmt->close();
 
-    // Insert user
     $stmt = $conn->prepare("INSERT INTO users (first_name, last_name, email, phone, password_hash, created_at)
                             VALUES (?, ?, ?, ?, ?, NOW())");
     $stmt->bind_param("sssss", $first_name, $last_name, $email, $phone, $password_hash);
     $stmt->execute();
 
-    // Return user data to auto-login
     echo json_encode([
         "message" => "Registration successful",
         "user" => [

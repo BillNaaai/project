@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
   <!-- Navigation -->
   <div id="navigation-container"></div>
   <script src="navigation.js"></script>
@@ -22,7 +23,6 @@
           <label for="categoryFilter" class="form-label">Filter by Category</label>
           <select id="categoryFilter" class="form-select">
             <option value="">All Categories</option>
-            <!-- Options will be added dynamically -->
           </select>
         </div>
         <div class="col-md-6 mb-3">
@@ -34,7 +34,6 @@
 
     <!-- Products Grid -->
     <div class="row" id="productList">
-      <!-- Products will be rendered here -->
     </div>
   </div>
 
@@ -51,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let allItems = [];
 
-  // ✅ FIXED: Define globally
   const urlParams = new URLSearchParams(window.location.search);
   const preSelectedCategory = urlParams.get('category');
 
@@ -107,7 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
       categoryFilter.appendChild(opt);
     });
 
-    // ✅ Now this works — variable is in scope
     if (preSelectedCategory) {
       console.log("Selected category from URL:", preSelectedCategory);
       console.log("Categories from DB:", categories);
@@ -138,9 +135,5 @@ if (match) {
   });
 });
 </script>
-
-
-
-
 </body>
 </html>

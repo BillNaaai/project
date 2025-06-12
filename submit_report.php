@@ -1,10 +1,7 @@
 <?php
 require 'db.php';
 header('Content-Type: application/json');
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 
-// Get POST values
 $item_id = $_POST['item_id'] ?? null;
 $user_id = $_POST['user_id'] ?? null;
 $user_email = $_POST['user_email'] ?? null;
@@ -15,7 +12,6 @@ if (!$item_id || !$user_id || !$user_email || !$issue) {
     exit;
 }
 
-// Get seller info
 $sql = "SELECT u.id AS seller_id, u.email AS seller_email
         FROM items i
         JOIN users u ON i.user_id = u.id
@@ -33,7 +29,6 @@ if ($result->num_rows === 0) {
 
 $seller = $result->fetch_assoc();
 
-// Insert report
 $insert = $conn->prepare("INSERT INTO reports 
     (item_id, seller_id, seller_email, reporter_id, reporter_email, issue, report_time) 
     VALUES (?, ?, ?, ?, ?, ?, NOW())");

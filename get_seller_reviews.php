@@ -9,7 +9,6 @@ if (!isset($_GET['seller_id'])) {
 
 $seller_id = intval($_GET['seller_id']);
 
-// Fetch all reviews for items owned by this seller
 $query = "
     SELECT r.rating, r.comment, r.created_at,
            u.first_name, u.last_name,

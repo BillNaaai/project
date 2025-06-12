@@ -43,10 +43,8 @@ document.addEventListener("DOMContentLoaded", function () {
     </nav>
     `;
 
-    // Insert navbar HTML
     document.getElementById("navigation-container").innerHTML = navHTML;
 
-    // Wait briefly for DOM insertion before binding
     setTimeout(() => {
         const userData = sessionStorage.getItem("user");
         let user = null;
@@ -104,7 +102,6 @@ document.addEventListener("DOMContentLoaded", function () {
             if (accountDivider) accountDivider.style.display = "none";
         }
 
-        // 🔍 Search functionality
         const searchForm = document.getElementById("searchForm");
         const searchInput = document.getElementById("searchInput");
 
@@ -118,7 +115,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
 
-        // 🛒 Cart Count functionality
         function updateCartCount() {
             const cart = JSON.parse(localStorage.getItem("cart")) || [];
             document.getElementById("cartCount").textContent = cart.length;

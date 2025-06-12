@@ -9,20 +9,25 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" />
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
-
 </head>
 <body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
   <!-- Navigation -->
   <div id="navigation-container"></div>
   <script src="navigation.js"></script>
 
   <!-- Profile Content -->
   <main class="container">
-    <h1 class="d-flex align-items-center">
-      <i class="bi bi-person-circle me-2"></i>
-      My Profile
-    </h1>
+    <div class="d-flex justify-content-between align-items-center">
+  <h1 class="d-flex align-items-center mb-0">
+    <i class="bi bi-person-circle me-2"></i>
+    My Profile
+  </h1>
+  <div>
+    <a href="faqpage.html" class="btn btn-outline-secondary me-2">FAQ</a>
+    <button id="logoutBtn2" class="btn btn-outline-danger">Logout</button>
+  </div>
+</div>
     <div class="profile-details">
       <p><strong>First Name:</strong> <span id="profileFirstName"></span></p>
       <p><strong>Last Name:</strong> <span id="profileLastName"></span></p>
@@ -35,54 +40,54 @@
     <hr />
 
     <h2 class="mb-3">Update Info</h2>
-<form id="infoForm" class="mb-5">
-  <div class="mb-3">
-    <label for="address" class="form-label">Address:</label>
-    <input type="text" class="form-control" id="address" placeholder="Enter new address">
-  </div>
+    <form id="infoForm" class="mb-5">
+      <div class="mb-3">
+        <label for="address" class="form-label">Address:</label>
+        <input type="text" class="form-control" id="address" placeholder="Enter new address">
+      </div>
 
-  <div class="mb-3">
-    <label for="phone" class="form-label">Phone Number:</label>
-    <input type="text" class="form-control" id="phone" placeholder="Enter new phone number">
-  </div>
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone Number:</label>
+        <input type="text" class="form-control" id="phone" placeholder="Enter new phone number">
+      </div>
 
-  <div class="mb-3">
-    <label for="business_name" class="form-label">Business Name:</label>
-    <input type="text" class="form-control" id="business_name" placeholder="Enter new business name">
-  </div>
+      <div class="mb-3">
+        <label for="business_name" class="form-label">Business Name:</label>
+        <input type="text" class="form-control" id="business_name" placeholder="Enter new business name">
+      </div>
 
-  <button type="submit" class="btn btn-outline-primary">Update Info</button>
-</form>
+      <button type="submit" class="btn btn-outline-primary">Update Info</button>
+    </form>
 
-<h2>Account Settings</h2>
-<form id="accountForm" class="mb-4">
-  <div class="mb-3">
-    <label for="firstName" class="form-label">First Name</label>
-    <input type="text" class="form-control" id="firstName" placeholder="Enter new first name">
-  </div>
+    <h2>Account Settings</h2>
+    <form id="accountForm" class="mb-4">
+      <div class="mb-3">
+        <label for="firstName" class="form-label">First Name</label>
+        <input type="text" class="form-control" id="firstName" placeholder="Enter new first name">
+      </div>
 
-  <div class="mb-3">
-    <label for="lastName" class="form-label">Last Name</label>
-    <input type="text" class="form-control" id="lastName" placeholder="Enter new last name">
-  </div>
+      <div class="mb-3">
+        <label for="lastName" class="form-label">Last Name</label>
+        <input type="text" class="form-control" id="lastName" placeholder="Enter new last name">
+      </div>
 
-  <div class="mb-3">
-    <label for="email" class="form-label">Email</label>
-    <input type="email" class="form-control" id="email" placeholder="Enter new email">
-  </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter new email">
+      </div>
 
-  <div class="mb-3">
-    <label for="newPassword" class="form-label">New Password</label>
-    <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
-  </div>
+      <div class="mb-3">
+        <label for="newPassword" class="form-label">New Password</label>
+        <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
+      </div>
 
-  <div class="mb-3">
-    <label for="confirmPassword" class="form-label">Confirm New Password</label>
-    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password">
-  </div>
+      <div class="mb-3">
+        <label for="confirmPassword" class="form-label">Confirm New Password</label>
+        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password">
+      </div>
 
-  <button type="submit" class="btn btn-outline-primary">Update Account</button>
-</form>
+      <button type="submit" class="btn btn-outline-primary">Update Account</button>
+    </form>
   </main>
 
   <!-- Footer -->
@@ -101,7 +106,6 @@
 
       const user = JSON.parse(userData);
 
-      // Display profile data
       document.getElementById("profileFirstName").textContent = user.first_name || "Not provided";
       document.getElementById("profileLastName").textContent = user.last_name || "Not provided";
       document.getElementById("profileEmail").textContent = user.email || "Not provided";
@@ -109,22 +113,23 @@
       document.getElementById("profileBusiness").textContent = user.business_name || "Not provided";
       document.getElementById("profileAddress").textContent = user.address || "Not provided";
 
-      // Logout
-      document.getElementById("logoutBtn2").addEventListener("click", () => {
-        sessionStorage.removeItem("user");
-        alert("Logged out successfully.");
-        window.location.href = "index.html";
-      });
+      const logoutBtn = document.getElementById("logoutBtn2");
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+          sessionStorage.removeItem("user");
+          alert("Logged out successfully.");
+          window.location.href = "index.html";
+        });
+      }
 
-      // Update profile
-      document.getElementById("updateBtn").addEventListener("click", () => {
-        const address = document.getElementById("addressInput").value.trim();
-        const phone = document.getElementById("phoneInput").value.trim();
-        const business = document.getElementById("businessInput").value.trim();
+      document.getElementById("infoForm").addEventListener("submit", function (e) {
+        e.preventDefault();
 
-        const payload = {
-          user_id: user.id, // Pass user ID for backend
-        };
+        const address = document.getElementById("address").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const business = document.getElementById("business_name").value.trim();
+
+        const payload = { user_id: user.id };
         if (address) payload.address = address;
         if (phone) payload.phone = phone;
         if (business) payload.business_name = business;
@@ -141,77 +146,81 @@
           },
           body: JSON.stringify(payload),
         })
-          .then(async (response) => {
-            const text = await response.text();
-            try {
-              return JSON.parse(text);
-            } catch (err) {
-              throw new Error("Invalid JSON: " + text);
-            }
-          })
-          .then((data) => {
-            if (data.user) {
-              sessionStorage.setItem("user", JSON.stringify(data.user));
-              alert("Profile updated successfully!");
-              location.reload();
-            } else {
-              alert(data.error || "Update failed.");
-            }
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            alert("Something went wrong. Try again.");
-          });
+        .then(async (response) => {
+          const text = await response.text();
+          try {
+            return JSON.parse(text);
+          } catch (err) {
+            throw new Error("Invalid JSON: " + text);
+          }
+        })
+        .then((data) => {
+          if (data.user) {
+            sessionStorage.setItem("user", JSON.stringify(data.user));
+            alert("Profile updated successfully!");
+            location.reload();
+          } else {
+            alert(data.error || "Update failed.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          alert("Something went wrong. Try again.");
+        });
+      });
+
+      document.getElementById('accountForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName = document.getElementById('lastName').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        if (newPassword && newPassword !== confirmPassword) {
+          alert("Passwords do not match.");
+          return;
+        }
+
+        const payload = {
+          user_id: user.id,
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+          password: newPassword
+        };
+
+        fetch('change_password.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.user) {
+            sessionStorage.setItem("user", JSON.stringify(data.user));
+            alert("Account info updated successfully.");
+            location.reload();
+          } else if (data.success) {
+            const user = JSON.parse(sessionStorage.getItem('user'));
+            if (firstName) user.first_name = firstName;
+            if (lastName) user.last_name = lastName;
+            if (email) user.email = email;
+            sessionStorage.setItem("user", JSON.stringify(user));
+            alert("Account info updated successfully.");
+            location.reload();
+          } else {
+            alert(data.error || "Update failed.");
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          alert("Error updating account.");
+        });
       });
     });
-
-    document.getElementById('accountForm').addEventListener('submit', function (e) {
-  e.preventDefault();
-
-  const firstName = document.getElementById('firstName').value.trim();
-  const lastName = document.getElementById('lastName').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const newPassword = document.getElementById('newPassword').value;
-  const confirmPassword = document.getElementById('confirmPassword').value;
-
-  if (newPassword && newPassword !== confirmPassword) {
-    alert("Passwords do not match.");
-    return;
-  }
-
-  const user = JSON.parse(sessionStorage.getItem('user'));
-  if (!user || !user.id) {
-    alert("You must be logged in.");
-    return;
-  }
-
-  const payload = {
-    user_id: user.id,
-    first_name: firstName,
-    last_name: lastName,
-    email: email,
-    password: newPassword
-  };
-
-  fetch('change_password.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        alert("Account info updated successfully.");
-        location.reload();
-      } else {
-        alert(data.error || "Update failed.");
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      alert("Error updating account.");
-    });
-});
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

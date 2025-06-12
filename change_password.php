@@ -1,10 +1,9 @@
 <?php
 header('Content-Type: application/json');
-require_once 'db.php'; // assumes you already have a db connection script
+require_once 'db.php'; 
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-// Validate input
 if (!isset($data['user_id'])) {
     echo json_encode(["success" => false, "error" => "User ID is required."]);
     exit;
@@ -16,7 +15,6 @@ $last_name = isset($data['last_name']) ? trim($data['last_name']) : null;
 $email = isset($data['email']) ? trim($data['email']) : null;
 $password = isset($data['password']) ? $data['password'] : null;
 
-// Prepare SQL dynamically
 $fields = [];
 $params = [];
 $types = '';
@@ -51,7 +49,6 @@ if (empty($fields)) {
     exit;
 }
 
-// Add user ID for WHERE clause
 $params[] = $user_id;
 $types .= 'i';
 

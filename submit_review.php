@@ -1,11 +1,9 @@
 <?php
 header('Content-Type: application/json');
-require 'db.php'; // Make sure this defines $conn (MySQLi)
+require 'db.php'; 
 
-// Get JSON input
 $data = json_decode(file_get_contents("php://input"), true);
 
-// Basic validation
 if (!$data || !isset($data['item_id'], $data['user_id'], $data['rating'], $data['comment'])) {
     echo json_encode(["success" => false, "message" => "Missing required fields."]);
     exit;
@@ -16,13 +14,11 @@ $user_id = (int) $data['user_id'];
 $rating = (int) $data['rating'];
 $comment = trim($data['comment']);
 
-// Optional rating range validation
 if ($rating < 1 || $rating > 5) {
     echo json_encode(["success" => false, "message" => "Rating must be between 1 and 5."]);
     exit;
 }
 
-// ✅ Step 1: Check for existing review
 $check = $conn->prepare("SELECT id FROM reviews WHERE user_id = ? AND item_id = ?");
 $check->bind_param("ii", $user_id, $item_id);
 $check->execute();
@@ -35,7 +31,6 @@ if ($check->num_rows > 0) {
 }
 $check->close();
 
-// ✅ Step 2: Insert new review
 $stmt = $conn->prepare("INSERT INTO reviews (item_id, user_id, rating, comment, created_at) VALUES (?, ?, ?, ?, NOW())");
 
 if (!$stmt) {

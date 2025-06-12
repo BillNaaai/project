@@ -2,18 +2,16 @@
 header("Content-Type: application/json");
 require 'db.php';
 
-// ✅ Ensure it's a POST request
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(["error" => "Method Not Allowed"]);
     exit;
 }
 
-// ✅ Parse JSON input
 $input = json_decode(file_get_contents("php://input"), true);
 if (
     !$input ||
-    !isset($input['user_id']) || // we expect this from frontend sessionStorage
+    !isset($input['user_id']) || 
     !is_numeric($input['user_id'])
 ) {
     http_response_code(400);
@@ -23,7 +21,6 @@ if (
 
 $userId = intval($input['user_id']);
 
-// ✅ Build update fields
 $fields = [];
 $types = "";
 $params = [];
@@ -49,7 +46,7 @@ if (empty($fields)) {
     exit;
 }
 
-$types .= "i"; // user_id (int)
+$types .= "i";
 $params[] = $userId;
 
 $sql = "UPDATE users SET " . implode(", ", $fields) . " WHERE id = ?";
@@ -59,7 +56,6 @@ try {
     $stmt->bind_param($types, ...$params);
     $stmt->execute();
 
-    // ✅ Fetch updated user info
     $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
     $stmt->bind_param("i", $userId);
     $stmt->execute();

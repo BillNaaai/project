@@ -78,7 +78,6 @@
     <div id="footer-container"></div>
     <script src="footer.js"></script>
 
-    <!-- AJAX Registration with Auto Login -->
     <script>
         $(document).ready(function () {
             $('#registerForm').submit(function (e) {
@@ -133,7 +132,7 @@
                             sessionStorage.setItem("user", JSON.stringify(response.user));
                             alert("Registration successful! You are now logged in.");
                             console.log("Redirecting to index.html...");
-                            window.location.href = "index.html"; // Redirect to homepage
+                            window.location.href = "index.html";
                         } else {
                             alert(response.error || "Registration failed.");
                         }

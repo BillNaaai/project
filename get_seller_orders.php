@@ -13,7 +13,7 @@ if ($seller_id <= 0) {
 $sql = "
     SELECT 
   o.order_id,
-  oi.item_id, -- ✅ include this
+  oi.item_id, 
   oi.quantity,
   oi.price,
   oi.status,

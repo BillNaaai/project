@@ -1,13 +1,10 @@
 <?php
-// get_random_items.php
-
 header('Content-Type: application/json');
 
-// Database credentials
 $host = 'localhost';
-$db   = 'e-shop';     // ⬅️ Replace with your DB name
-$user = 'root';         // ⬅️ Replace with your DB username
-$pass = '';         // ⬅️ Replace with your DB password
+$db   = 'e-shop';     
+$user = 'root';         
+$pass = '';         
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";

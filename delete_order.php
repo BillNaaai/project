@@ -10,7 +10,6 @@ if (!isset($data['order_id'])) {
 
 $order_id = (int)$data['order_id'];
 
-// Optional: delete related items from order_items table if applicable
 $conn->begin_transaction();
 try {
     $stmtItems = $conn->prepare("DELETE FROM order_items WHERE order_id = ?");

@@ -18,10 +18,9 @@
   <div class="container my-5">
     <h1 class="text-primary mb-4">Welcome to E-Shop</h1>
 
-    <!-- 🔁 Carousel -->
+    <!-- Carousel -->
     <div id="highlightCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
       <div class="carousel-inner" id="carousel-items">
-        <!-- JS will inject slides here -->
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#highlightCarousel" data-bs-slide="prev">
         <span class="carousel-control-prev-icon"></span>
@@ -33,10 +32,9 @@
       </button>
     </div>
 
-    <!-- 🛍 Featured Products -->
+    <!-- Featured Products -->
     <h2 class="mb-3">Featured Products</h2>
     <div class="row" id="product-grid">
-      <!-- JS will inject items here -->
     </div>
   </div>
 
@@ -92,10 +90,9 @@
         carousel.innerHTML = '';
         grid.innerHTML = '';
 
-        const carouselItems = data.slice(0, 6);     // 2 slides (3 items each)
-        const featuredItems = data.slice(6, 14);    // 8 items
+        const carouselItems = data.slice(0, 6);
+        const featuredItems = data.slice(6, 14);
 
-        // Carousel: group into slides of 3
         const chunkedSlides = carouselItems.reduce((chunks, item, index) => {
           const chunkIndex = Math.floor(index / 3);
           if (!chunks[chunkIndex]) chunks[chunkIndex] = [];
@@ -107,7 +104,6 @@
           carousel.innerHTML += createCarouselSlide(chunk, index === 0);
         });
 
-        // Featured Products Grid
         featuredItems.forEach(item => {
           grid.innerHTML += createGridItem(item);
         });

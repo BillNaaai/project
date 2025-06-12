@@ -12,7 +12,6 @@ if (!isset($data['email']) || !isset($data['password'])) {
 $email = $data['email'];
 $password = $data['password'];
 
-// Try admin login first
 $stmt = $conn->prepare("SELECT * FROM admins WHERE email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
@@ -33,7 +32,6 @@ if ($adminResult->num_rows === 1) {
     }
 }
 
-// Now try user login
 $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();

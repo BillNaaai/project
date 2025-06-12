@@ -11,26 +11,45 @@
 <nav class="navbar navbar-light bg-light justify-content-between px-4">
   <button class="btn btn-outline-danger" onclick="logoutAdmin()">Log Out</button>
 </nav>
+
 <div class="container my-5">
   <h1 class="text-center mb-4">Admin Dashboard</h1>
-    <div class="row mb-4">
-    <div class="col-md-6">
-        <div class="card text-white bg-info">
+
+  <div class="row mb-4">
+    <div class="col-md-3">
+      <div class="card text-white bg-info">
         <div class="card-body">
-            <h5 class="card-title">Total Sales</h5>
-            <p class="card-text" id="total-sales">R0.00</p>
+          <h5 class="card-title">Total Sales</h5>
+          <p class="card-text" id="total-sales">R0.00</p>
         </div>
-        </div>
+      </div>
     </div>
-    <div class="col-md-6">
-        <div class="card text-white bg-secondary">
+    <div class="col-md-3">
+      <div class="card text-white bg-secondary">
         <div class="card-body">
-            <h5 class="card-title">Total Orders</h5>
-            <p class="card-text" id="total-orders">0</p>
+          <h5 class="card-title">Total Orders</h5>
+          <p class="card-text" id="total-orders">0</p>
         </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-primary">
+        <div class="card-body">
+          <h5 class="card-title">Total Users</h5>
+          <p class="card-text" id="total-users">0</p>
         </div>
+      </div>
     </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-success">
+        <div class="card-body">
+          <h5 class="card-title">Total Items</h5>
+          <p class="card-text" id="total-items">0</p>
+        </div>
+      </div>
     </div>
+  </div>
+
   <div class="row g-4">
     <div class="col-md-6">
       <div class="card">
@@ -89,27 +108,51 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   loadData("admin-users", "get_all_users.php", renderUser);
-
-  loadData("admin-items", "get_all_items.php", item => `
-    <div class="mb-2">
-      <strong>${item.title}</strong> - R${parseFloat(item.price).toFixed(2)}
-      <button class="btn btn-sm btn-outline-danger float-end" onclick="removeEntity('delete_item.php', { id: ${item.id} }, 'admin-items', 'get_all_items.php', renderItem)">Remove</button>
-    </div>`);
-
-  loadData("admin-reviews", "get_all_reviews.php", review => `
-    <div class="mb-2">
-      <strong>${review.first_name}</strong>: ${review.comment} (${review.rating}/5)
-      <button class="btn btn-sm btn-outline-danger float-end" onclick="removeEntity('delete_review.php', { id: ${review.id} }, 'admin-reviews', 'get_all_reviews.php', renderReview)">Remove</button>
-    </div>`);
-
-  loadData("admin-reports", "get_all_reports.php", report => `
-    <div class="mb-2">
-      <strong>Report #${report.id}</strong> - ${report.issue}
-      <button class="btn btn-sm btn-outline-danger float-end" onclick="removeEntity('delete_report.php', { id: ${report.id} }, 'admin-reports', 'get_all_reports.php', renderReport)">Remove</button>
-    </div>`);
-
+  loadData("admin-items", "get_all_items.php", renderItem);
+  loadData("admin-reviews", "get_all_reviews.php", renderReview);
+  loadData("admin-reports", "get_all_reports.php", renderReport);
   loadData("admin-orders", "get_all_orders.php", renderOrder);
-  
+
+  fetch("get_all_orders_stats.php")
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById("admin-orders");
+      const orders = data.orders;
+      if (!Array.isArray(orders) || orders.length === 0) {
+        container.innerHTML = '<p class="text-muted">No orders found.</p>';
+      } else {
+        container.innerHTML = orders.map(order => `
+          <div class="mb-2">
+            Order #${order.order_id} • Buyer ID: ${order.buyer_id} • R${parseFloat(order.total_amount).toFixed(2)} • ${order.created_at}
+            <button class="btn btn-sm btn-outline-danger float-end" onclick="removeEntity('delete_order.php', { order_id: ${order.order_id} }, 'admin-orders', 'get_all_orders.php', renderOrder)">Remove</button>
+          </div>
+        `).join('');
+      }
+
+      document.getElementById("total-sales").textContent = "R" + parseFloat(data.total_sales).toFixed(2);
+      document.getElementById("total-orders").textContent = data.total_orders;
+    })
+    .catch(() => {
+      document.getElementById("admin-orders").innerHTML = '<p class="text-danger">Failed to load orders.</p>';
+    });
+
+  fetch("get_all_users.php")
+    .then(res => res.json())
+    .then(users => {
+      document.getElementById("total-users").textContent = users.length;
+    })
+    .catch(() => {
+      document.getElementById("total-users").textContent = "N/A";
+    });
+
+  fetch("get_all_items.php")
+    .then(res => res.json())
+    .then(items => {
+      document.getElementById("total-items").textContent = items.length;
+    })
+    .catch(() => {
+      document.getElementById("total-items").textContent = "N/A";
+    });
 });
 
 function loadData(containerId, url, renderFn) {
@@ -150,31 +193,7 @@ function removeEntity(endpoint, payload, containerId, fetchUrl, renderFn) {
     alert("Deletion failed.");
   });
 }
-fetch("get_all_orders_stats.php")
-  .then(res => res.json())
-  .then(data => {
-    const container = document.getElementById("admin-orders");
-    const orders = data.orders;
-    if (!Array.isArray(orders) || orders.length === 0) {
-      container.innerHTML = '<p class="text-muted">No orders found.</p>';
-    } else {
-      container.innerHTML = orders.map(order => `
-        <div class="mb-2">
-          Order #${order.order_id} • Buyer ID: ${order.buyer_id} • R${parseFloat(order.total_amount).toFixed(2)} • ${order.created_at}
-          <button class="btn btn-sm btn-outline-danger float-end" onclick="removeEntity('delete_order.php', { order_id: ${order.order_id} }, 'admin-orders', 'get_all_orders.php', renderOrder)">Remove</button>
-        </div>
-      `).join('');
-    }
 
-    // Set totals
-    document.getElementById("total-sales").textContent = "R" + parseFloat(data.total_sales).toFixed(2);
-    document.getElementById("total-orders").textContent = data.total_orders;
-  })
-  .catch(() => {
-    document.getElementById("admin-orders").innerHTML = '<p class="text-danger">Failed to load orders.</p>';
-  });
-
-// Render functions for reuse
 const renderUser = user => `
   <div class="mb-2">
     <strong>ID: ${user.id}</strong> — ${user.first_name} ${user.last_name} (${user.email})
@@ -205,7 +224,7 @@ const renderOrder = order => `
     <button class="btn btn-sm btn-outline-danger float-end" onclick="removeEntity('delete_order.php', { order_id: ${order.order_id} }, 'admin-orders', 'get_all_orders.php', renderOrder)">Remove</button>
   </div>`;
 
-  function logoutAdmin() {
+function logoutAdmin() {
   sessionStorage.removeItem("admin");
   window.location.href = "loginpage.html";
 }

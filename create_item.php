@@ -4,7 +4,6 @@ require 'db.php';
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-// Validate required fields
 if (
     !$data ||
     !isset($data["title"], $data["description"], $data["price"], $data["category"], $data["user_id"])
@@ -13,7 +12,6 @@ if (
     exit;
 }
 
-// Sanitize and assign
 $title = htmlspecialchars($data["title"]);
 $description = htmlspecialchars($data["description"]);
 $price = floatval($data["price"]);

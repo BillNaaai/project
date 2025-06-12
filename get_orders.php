@@ -1,7 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 header('Content-Type: application/json');
 require_once 'db.php';
 
@@ -12,7 +9,6 @@ if (!isset($_GET['buyer_id']) || !is_numeric($_GET['buyer_id'])) {
 
 $buyer_id = intval($_GET['buyer_id']);
 
-// Step 1: Fetch all orders for the buyer
 $orderQuery = $conn->prepare("SELECT order_id, total_amount, created_at FROM orders WHERE buyer_id = ? ORDER BY created_at DESC");
 $orderQuery->bind_param("i", $buyer_id);
 $orderQuery->execute();
@@ -23,7 +19,6 @@ $orders = [];
 while ($order = $orderResult->fetch_assoc()) {
     $order_id = $order['order_id'];
 
-    // Step 2: For each order, fetch the items
     $itemQuery = $conn->prepare("
         SELECT oi.quantity, oi.price, i.title 
         FROM order_items oi
@@ -43,7 +38,6 @@ while ($order = $orderResult->fetch_assoc()) {
         ];
     }
 
-    // Step 3: Add everything to the final orders array
     $orders[] = [
         'order_id' => $order_id,
         'order_date' => date('Y-m-d', strtotime($order['created_at'])),

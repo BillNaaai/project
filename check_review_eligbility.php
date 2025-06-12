@@ -1,8 +1,7 @@
 <?php
 header('Content-Type: application/json');
-require 'db.php'; // your database connection
+require 'db.php'; 
 
-// Validate input
 $user_id = isset($_GET['user_id']) ? intval($_GET['user_id']) : 0;
 $item_id = isset($_GET['item_id']) ? intval($_GET['item_id']) : 0;
 
@@ -12,7 +11,6 @@ if ($user_id <= 0 || $item_id <= 0) {
 }
 
 try {
-    // Check if the user has bought this item
     $sql = "
         SELECT oi.id
         FROM orders o
