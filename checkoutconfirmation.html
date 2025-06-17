@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Order Summary - E-Shop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Navigation -->
+  <div id="navigation-container"></div>
+  <script src="navigation.js"></script>
+
+  <div class="container my-5">
+    <h1 class="mb-4 text-center">Order Summary</h1>
+    <p class="alert alert-warning text-center">
+      Please contact each seller directly to arrange <strong>payment</strong> and <strong>delivery</strong>.
+    </p>
+    <div id="order-summary"></div>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
+  <script src="footer.js"></script>
+
+  <script>
+    async function renderCheckoutConfirmation() {
+      const container = document.getElementById('order-summary');
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+      if (!cart.length) {
+        container.innerHTML = '<div class="alert alert-info">Your cart is empty.</div>';
+        return;
+      }
+
+      let total = 0;
+      let html = `<div class="card mb-4"><div class="card-body">`;
+
+      for (const item of cart) {
+        const price = parseFloat(item.price) || 0;
+        const quantity = parseInt(item.quantity) || 1;
+        const subtotal = price * quantity;
+        total += subtotal;
+
+        html += `
+          <div class="d-flex justify-content-between border-bottom py-2">
+            <div>
+              <strong>${item.title}</strong><br />
+              Quantity: ${quantity}<br />
+              Seller ID: ${item.seller_id || 'N/A'}<br />
+              <small class="text-muted">Seller Email: ${item.email || 'N/A'}</small><br />
+              ${
+                item.email
+                  ? `<a href="mailto:${item.email}?subject=Order%20Enquiry%20for%20${encodeURIComponent(item.title)}"
+                       class="btn btn-sm btn-outline-primary mt-1">
+                       Contact Seller
+                     </a>`
+                  : `<small class="text-muted">No contact email available</small>`
+              }
+            </div>
+            <div class="text-end">
+              R${subtotal.toFixed(2)}
+            </div>
+          </div>
+        `;
+      }
+
+      html += `
+        <div class="d-flex justify-content-end mt-3">
+          <strong>Total: R${total.toFixed(2)}</strong>
+        </div>
+        <p class="text-muted mt-3 text-center">Your cart has been cleared after placing the order.</p>
+<div class="text-center mt-4">
+  <a href="myorders.html" class="btn btn-success btn-lg">Continue to My Orders</a>
+</div>
+</div></div>`;
+
+      container.innerHTML = html;
+
+      // Clear the cart AFTER rendering
+      setTimeout(() => {
+        localStorage.removeItem('cart');
+      }, 500);
+    }
+
+    document.addEventListener("DOMContentLoaded", renderCheckoutConfirmation);
+  </script>
+</body>
+</html>

@@ -102,11 +102,10 @@
     }
 
     function removeFromCart(index) {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart.splice(index, 1);
-  localStorage.setItem("cart", JSON.stringify(cart));
-  location.reload();
-}
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }
 
     function checkout() {
       const user = JSON.parse(sessionStorage.getItem('user'));
@@ -130,11 +129,7 @@
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          alert('Order placed successfully!');
-          localStorage.removeItem('cart');
-          cart = [];
-          renderCart();
-          window.location.href = "myorders.html";
+          window.location.href = "checkoutconfirmation.html";
         } else {
           alert('Order failed: ' + (data.error || 'Unknown error'));
         }

@@ -2,14 +2,18 @@
 header("Content-Type: application/json");
 require 'db.php';
 
+// Read raw input and decode
 $data = json_decode(file_get_contents("php://input"), true);
 
-if (!isset($data['item_id'])) {
+// Check both possible keys
+$id = $data['id'] ?? $data['item_id'] ?? null;
+
+if (!$id) {
     echo json_encode(["error" => "Missing item ID"]);
     exit;
 }
 
-$item_id = intval($data['item_id']);
+$item_id = intval($id);
 
 try {
     $stmt = $conn->prepare("DELETE FROM items WHERE id = ?");

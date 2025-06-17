@@ -1,4 +1,4 @@
-<?php
+<?php 
 header('Content-Type: application/json');
 require_once 'db.php';
 
@@ -9,7 +9,12 @@ if (!isset($_GET['buyer_id']) || !is_numeric($_GET['buyer_id'])) {
 
 $buyer_id = intval($_GET['buyer_id']);
 
-$orderQuery = $conn->prepare("SELECT order_id, total_amount, created_at FROM orders WHERE buyer_id = ? ORDER BY created_at DESC");
+$orderQuery = $conn->prepare("
+    SELECT order_id, total_amount, created_at 
+    FROM orders 
+    WHERE buyer_id = ? 
+    ORDER BY created_at DESC
+");
 $orderQuery->bind_param("i", $buyer_id);
 $orderQuery->execute();
 $orderResult = $orderQuery->get_result();
@@ -20,9 +25,14 @@ while ($order = $orderResult->fetch_assoc()) {
     $order_id = $order['order_id'];
 
     $itemQuery = $conn->prepare("
-        SELECT oi.quantity, oi.price, i.title 
+        SELECT 
+            oi.quantity, 
+            oi.price, 
+            i.title, 
+            u.email AS seller_email
         FROM order_items oi
         JOIN items i ON oi.item_id = i.id
+        JOIN users u ON oi.seller_id = u.id
         WHERE oi.order_id = ?
     ");
     $itemQuery->bind_param("i", $order_id);
@@ -34,7 +44,8 @@ while ($order = $orderResult->fetch_assoc()) {
         $items[] = [
             'title' => $item['title'],
             'quantity' => $item['quantity'],
-            'price' => $item['price']
+            'price' => $item['price'],
+            'seller_email' => $item['seller_email']  
         ];
     }
 

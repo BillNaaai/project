@@ -63,7 +63,11 @@
               <div class="d-flex justify-content-between border-bottom py-2">
                 <div>
                   <strong>${item.title}</strong><br />
-                  Quantity: ${item.quantity}
+                  Quantity: ${item.quantity}<br />
+                  <small class="text-muted">Seller Email: ${item.seller_email}</small><br />
+                  <a href="mailto:${item.email}?subject=Order%20Enquiry%20for%20${encodeURIComponent(item.title)}" class="btn btn-sm btn-outline-primary mt-1">
+                    Contact Seller
+                  </a>
                 </div>
                 <div class="text-end">
                   R${(item.price * item.quantity).toFixed(2)}
